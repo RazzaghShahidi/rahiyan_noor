@@ -53,3 +53,36 @@ function loadData(loadType, loadId) {
         }
     });
 }
+
+//ajax delete shahidan with ajax
+$(function () {
+
+    $(".delete_me").click(function () {
+        var shahidanId = $(this).attr("id");
+        var parent = $(this).parent();
+        var item = parent.closest('tr'); item.slideUp('slow', function () {
+            $(this).remove();
+        });
+        $.ajax({
+            type: "post",
+            url: "shahidan/delete_shahidan_id",
+            cache: false,
+            data: 'shahidan_id=' + shahidanId,
+            success: function (response) {
+                try {
+                    if (response == 'true') {
+                        item.slideUp('slow', function () {
+                            $(this).remove();
+                        });
+                    }
+
+                } catch (e) {
+                    alert('Exception while request..');
+                }
+            },
+            error: function () {
+                alert('Error while request..');
+            }
+        });
+    })
+})

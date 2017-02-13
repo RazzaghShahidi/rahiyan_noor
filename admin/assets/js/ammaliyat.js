@@ -24,3 +24,37 @@ function selectIngredient(select) {
 
     ul.appendChild(li);
 }
+
+
+
+//ajax delete ammaliyat
+$(function () {
+    $(".delete_me").click(function () {
+        var ammaliyatId = $(this).attr("id");
+        var parent = $(this).parent();
+        var item = parent.closest('tr'); item.slideUp('slow', function () {
+            $(this).remove();
+        });
+        $.ajax({
+            type: "post",
+            url: "ammaliyat/delete_ammaliyat_id",
+            cache: false,
+            data: 'ammaliyat_id=' + ammaliyatId,
+            success: function (response) {
+                try {
+                    if (response == 'true') {
+                        item.slideUp('slow', function () {
+                            $(this).remove();
+                        });
+                    }
+
+                } catch (e) {
+                    alert('Exception while request..');
+                }
+            },
+            error: function () {
+                alert('Error while request..');
+            }
+        });
+    })
+})

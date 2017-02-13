@@ -89,5 +89,22 @@ class Shahidan_model extends CI_Model
         return false;
     }
 
+
+    // Function to Delete selected record from table .
+    function delete_shahidan_id($id)
+    {
+        $this->db->where('shahidan_id', $id);
+        $this->db->delete('shahidan');
+
+        $this->db->where('shahidan_id', $id);
+        $this->db->delete('shahidan_ammaliyat');
+
+
+        if ($this->db->affected_rows()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
  

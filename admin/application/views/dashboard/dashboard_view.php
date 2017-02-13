@@ -75,6 +75,5 @@
     </div>
     <!--         end latest news   -->
 </div>
-<a href="admin /logout">Logout</a>
 </body>
 </html>

@@ -24,7 +24,6 @@ class Manategh_model extends CI_Model
     }
 
 
-
     //get all manategh
     function get_all_manategh()
     {
@@ -34,11 +33,13 @@ class Manategh_model extends CI_Model
 
 //###############################################################
 
-    public function manategh_count() {
+    public function manategh_count()
+    {
         return $this->db->count_all("manategh");
     }
 
-    public function fetch_manategh($limit, $start) {
+    public function fetch_manategh($limit, $start)
+    {
         $this->db->limit($limit, $start);
         $query = $this->db->get("manategh");
 
@@ -49,5 +50,19 @@ class Manategh_model extends CI_Model
             return $data;
         }
         return false;
+    }
+
+    // Function to Delete selected record from table .
+    function delete_manategh_id($id)
+    {
+        $this->db->where('manategh_id', $id);
+        $this->db->delete('manategh');
+        if ($this->db->affected_rows()) {
+            return true;
+        } else {
+            return false;
+        }
+
+
     }
 }

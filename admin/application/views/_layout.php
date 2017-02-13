@@ -65,7 +65,7 @@
                 <ul class="dropdown-menu">
 
                     <li>
-                        <a href="#"> Log Out <i class="fa fa-fw fa-power-off"></i></a>
+                        <a href="<?php base_url()?>login/logout"> خروج <i class="fa fa-fw fa-power-off"></i></a>
                     </li>
                 </ul>
             </li>

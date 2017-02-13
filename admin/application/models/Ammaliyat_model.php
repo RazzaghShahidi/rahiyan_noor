@@ -63,14 +63,15 @@ class Ammaliyat_model extends CI_Model
     {
         $query_string = "SELECT ammaliyat.ammaliyat_id,ammaliyat.ammaliyat_name,ammaliyat.ammaliyat_start_date,ammaliyat.ammaliyat_end_date, ";
         $query_string .= "ammaliyat.ammaliyat_operation_code,ammaliyat.ammaliyat_Strength,ammaliyat.ammaliyat_commander_name, ";
-        $query_string .= "ammaliyat . ammaliyat_description,manategh . manategh_id,manategh . manategh_name ";
+        $query_string .= "ammaliyat.ammaliyat_description,manategh.manategh_id,manategh.manategh_name ";
         $query_string .= "from ammaliyat join ammaliyat_manategh join manategh ";
-        $query_string .= "ON ammaliyat_manategh . ammaliyat_id = ammaliyat . ammaliyat_id && manategh . manategh_id = ammaliyat_manategh . manategh_id ";
+        $query_string .= "ON ammaliyat_manategh.ammaliyat_id = ammaliyat.ammaliyat_id && manategh.manategh_id = ammaliyat_manategh.manategh_id ";
         $query_string .= "LIMIT " . $limit . " OFFSET " . $start;
 
         $query = $this->db->query($query_string);
 
         if ($query->num_rows() > 0) {
+
             foreach ($query->result_array() as $row) {
                 $data[] = $row;
             }
@@ -79,5 +80,22 @@ class Ammaliyat_model extends CI_Model
         return false;
     }
 
+
+    // Function to Delete selected record from table .
+    function delete_ammaliyat_id($id)
+    {
+        $this->db->where('ammaliyat_id', $id);
+        $this->db->delete('ammaliyat');
+
+        $this->db->where('ammaliyat_id', $id);
+        $this->db->delete('ammaliyat_manategh');
+
+
+        if ($this->db->affected_rows()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }

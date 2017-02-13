@@ -19,6 +19,8 @@ class Media extends RN_Controller
 
     function index()
     {
+        $this->load->library('pagination');
+
         $data["username"] = $this->username;
         $view_data['$controller_name'] = "media";
 
@@ -41,7 +43,7 @@ class Media extends RN_Controller
 
         $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
         $media = $this->media_model->fetch_media($config["per_page"], $page);
-        echo "<pre>";print_r($media);exit();
+        //echo "<pre>";print_r($media);exit();
         $data["results"] = array();
         foreach ($media as $key => $value) {
             $media_id = $value['media_id'];

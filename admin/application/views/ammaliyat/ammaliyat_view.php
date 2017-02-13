@@ -57,7 +57,7 @@
                             </td>
                             <td>
                                 <p data-placement="top" data-toggle="tooltip" title="Delete">
-                                    <button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal"
+                                    <button class="btn btn-danger btn-xs delete_me" data-title="Delete" data-toggle="modal" id="<?php echo $ammaliyat["ammaliyat_id"] ?>"
                                             data-target="#delete"><span class="glyphicon glyphicon-trash"></span>
                                     </button>
                                 </p>

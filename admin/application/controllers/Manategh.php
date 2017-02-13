@@ -19,7 +19,7 @@ class Manategh extends RN_Controller
     function index()
     {
         $data["username"] = $this->username;
-
+$data['controller_name']='manategh';
 
         $config = array();
         $config['next_link'] = '&gt;';
@@ -44,6 +44,13 @@ class Manategh extends RN_Controller
 
         $this->template->load('manategh/manategh_view', $data);
     }
+
+    function delete_manategh_id() {
+        $manategh_id =  $this->input->post('manategh_id');
+        $data['status'] = $this->manategh_model->delete_manategh_id($manategh_id);
+        echo json_encode($data);
+    }
+
 
 
     function add_mantaghe()

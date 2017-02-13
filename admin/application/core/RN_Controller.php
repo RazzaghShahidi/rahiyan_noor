@@ -16,26 +16,19 @@ class RN_Controller extends CI_Controller
         parent::__construct();
 
 
-        $logedin_data = $this->input->cookie('rahiyan_noor_login_cookie');
-        if (!empty($logedin_data)) {
-            $this->load->library('encrypt');
-            $this->username = $this->encrypt->decode($logedin_data, ENCRIPT_KEY);
+     // check is usser loged in
+        $is_logedin = $this->session->userdata('is_loged_in');
+        $logedin_data = $this->session->userdata('loged_in_user');
 
-//@todo here should check with database
-        } else {
-            //check session
-            $logedin_data = $this->session->userdata('logged_in');
-            if (!empty($logedin_data)) {
-                if (!$logedin_data['username']) {
-                    redirect('login', 'refresh');
-                }
-            } else {
-                //If no loged in, redirect to login page
+        if (!empty($is_logedin)|| $is_logedin==true) {
+            if (!isset($logedin_data['username'])) {
                 redirect('login', 'refresh');
             }
-            $this->username = $this->session->userdata('logged_in');
-            $this->user_id = $this->session->userdata('logged_in');
+        } else {
+            //If no loged in, redirect to login page
+            redirect('login', 'refresh');
         }
 
+        $this->username = $logedin_data["username"];
     }
 }

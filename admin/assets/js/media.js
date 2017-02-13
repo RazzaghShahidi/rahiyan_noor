@@ -160,3 +160,4 @@ function selectIngredient(select, selected_type) {
 
     ul.appendChild(li);
 }
+

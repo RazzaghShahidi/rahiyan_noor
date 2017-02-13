@@ -50,6 +50,7 @@ class Shahidan extends RN_Controller
                 $data["shahidan"][$shahidan_id]["ammaliyat_name"] .= " ,{$value['ammaliyat_name']}";
             } else {
                 $data["shahidan"][$shahidan_id] = array(
+                    'shahidan_id' =>             $value['shahidan_id'],
                     'shahidan_name' =>           $value['shahidan_name'],
                     'shahidan_familly' =>        $value['shahidan_familly'],
                     'shahidan_birth_place' =>    $value['shahidan_birth_place'],
@@ -64,8 +65,16 @@ class Shahidan extends RN_Controller
             }
 
         }
+        $data['controller_name']= "shahidan";
         $data["links"] = $this->pagination->create_links();
         $this->template->load('shahidan/shahidan_view', $data);
+    }
+
+
+    function delete_shahidan_id() {
+        $shahidan_id =  $this->input->post('shahidan_id');
+        $data['status'] = $this->shahidan_model->delete_shahidan_id($shahidan_id);
+        echo json_encode($data);
     }
 
 

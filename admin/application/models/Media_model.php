@@ -45,19 +45,22 @@ class Media_model extends CI_Model
 
     public function fetch_media($limit, $start)
     {
-        $query_string = "SELECT  media.media_id ,media.media_title,media.media_file_name,media.media_size,media.media_path,media.media_detail ";
-        $query_string .= "ammaliyat.ammaliyat_operation_code,ammaliyat.ammaliyat_Strength,ammaliyat.ammaliyat_commander_name, ";
-        $query_string .= "ammaliyat.ammaliyat_description,manategh.manategh_id,manategh.manategh_name ";
-        $query_string .= "from ammaliyat join ammaliyat_manategh join manategh ";
-        $query_string .= "ON ammaliyat_manategh.ammaliyat_id = ammaliyat.ammaliyat_id && manategh.manategh_id = ammaliyat_manategh.manategh_id ";
-        $query_string .= "LIMIT " . $limit . " OFFSET " . $start;
+        $this->db->select()
+            ->from('media')
+            ->join('media_term','media.media_id=media_term.media_id')
+                ->limit($limit)
+                ->offset($start);
+        $query = $this->db->get();
 
-        $query = $this->db->query($query_string);
+        echo "<pre>";print_r($query->result());exit();
 
         if ($query->num_rows() > 0) {
             foreach ($query->result_array() as $row) {
                 $data[] = $row;
+
+
             }
+
             return $data;
         }
         return false;

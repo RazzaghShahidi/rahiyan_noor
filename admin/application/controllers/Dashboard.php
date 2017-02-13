@@ -17,7 +17,7 @@ class Dashboard extends RN_Controller {
     function index()
     {
         $logedin_data = $this->session->userdata('logged_in');
-        $data['username']=$logedin_data['username'];
+        $data['username']=$this->username;
         $this->template->load('dashboard/dashboard_view', $data);
     }
 

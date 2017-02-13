@@ -370,7 +370,7 @@ $config['encryption_key'] = '93s9S181rPfjVx906ubW45oEx5y61S2N8y06Rnm5M6Ve676jldC
 */
 $config['sess_driver'] = 'files';
 $config['sess_cookie_name'] = 'rahiyan_noor';
-$config['sess_expiration'] = 0;
+$config['sess_expiration'] = 1000;
 $config['sess_save_path'] = NULL;
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
