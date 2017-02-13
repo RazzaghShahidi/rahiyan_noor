@@ -81,10 +81,19 @@ jQuery(function () {
     function displayUplodDetail(uploadDetails) {
         $("#uploaded_file_detils").html("");
         $.each(uploadDetails, function (index, element) {
-            $("#uploaded_file_detils").append("<li class='uploaded_file_detils'>ذخیره شده با نام: " + element.file_name + "</li>");
-            $("#uploaded_file_detils").append(" <li class='uploaded_file_detils'> نوع فایل : " + element.file_type + "</li>");
-            $("#uploaded_file_detils").append(" <li class='uploaded_file_detils'> سایز فایل: " + element.file_size + "</li>");
-            $("#uploaded_file_detils").append(" <li class='uploaded_file_detils'> محل ذخیره : " + element.full_path + "</li>");
+            var details="<div class='file_detils_wraper'><li class='uploaded_file_detils'>ذخیره شده با نام: " + element.file_name + "</li>";
+            details +="<li class='uploaded_file_detils'> نوع فایل : " + element.file_type + "</li>";
+            details +=" <li class='uploaded_file_detils'> سایز فایل: " + element.file_size + "</li>";
+            details +=" <li class='uploaded_file_detils'> سایز فایل: " + element.file_size + "</li>";
+            details +="<li class='uploaded_file_detils'> محل ذخیره : " + element.full_path + "</li>";
+            details +=" </div>";
+            //
+            // $("#uploaded_file_detils").append("<div class='file_detils_wraper'>");
+            // $("#uploaded_file_detils").append("<li class='uploaded_file_detils'>ذخیره شده با نام: " + element.file_name + "</li>");
+            // $("#uploaded_file_detils").append(" <li class='uploaded_file_detils'> نوع فایل : " + element.file_type + "</li>");
+            // $("#uploaded_file_detils").append(" <li class='uploaded_file_detils'> سایز فایل: " + element.file_size + "</li>");
+            // $("#uploaded_file_detils").append(" <li class='uploaded_file_detils'> محل ذخیره : " + element.full_path + "</li>");
+            $("#uploaded_file_detils").append(details);
         });
     }
 

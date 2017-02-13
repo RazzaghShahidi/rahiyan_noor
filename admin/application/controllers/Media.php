@@ -43,7 +43,7 @@ class Media extends RN_Controller
 
         $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
         $media = $this->media_model->fetch_media($config["per_page"], $page);
-        //echo "<pre>";print_r($media);exit();
+
         $data["results"] = array();
         foreach ($media as $key => $value) {
             $media_id = $value['media_id'];
@@ -162,7 +162,7 @@ class Media extends RN_Controller
     public function upload()
     {
         if (!empty($_FILES)) {
-            $config['upload_path'] = "./uploads";
+            $config['upload_path'] = "./../uploads";
             $config['allowed_types'] = 'gif|jpg|png|mp4|ogv|zip';
 
             $this->load->library('upload');

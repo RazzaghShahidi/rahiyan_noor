@@ -68,9 +68,9 @@ class Ammaliyat extends RN_Controller
     }
 
 
-
-    function delete_ammaliyat_id() {
-        $ammaliyat_id =  $this->input->post('ammaliyat_id');
+    function delete_ammaliyat_id()
+    {
+        $ammaliyat_id = $this->input->post('ammaliyat_id');
         $data['status'] = $this->ammaliyat_model->delete_ammaliyat_id($ammaliyat_id);
         echo json_encode($data);
     }
@@ -133,15 +133,10 @@ class Ammaliyat extends RN_Controller
 
     public function checkDateFormat($date)
     {
-        if (preg_match("/[0-31]{2}\/[0-12]{2}\/[0-9]{4}/", $date)) {
-            if (checkdate(substr($date, 3, 2), substr($date, 0, 2), substr($date, 6, 4)))
-                return true;
-            else
-                return false;
+        if (preg_match("/^[1-9][0-9]{3}\/(0[1-9]|1[0-2])\/(0[1-9]|[1-2][0-9]|3[0-1])$/", $date)) {
+            return true;
         } else {
             return false;
         }
-
-
     }
 }
