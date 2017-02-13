@@ -20,7 +20,7 @@ class RN_Controller extends CI_Controller
         $is_logedin = $this->session->userdata('is_loged_in');
         $logedin_data = $this->session->userdata('loged_in_user');
 
-        if (!empty($is_logedin)|| $is_logedin==true) {
+        if (!empty($is_logedin)&& $is_logedin==true) {
             if (!isset($logedin_data['username'])) {
                 redirect('login', 'refresh');
             }

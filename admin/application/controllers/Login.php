@@ -23,21 +23,20 @@ class Login extends CI_Controller
         $is_logedin = $this->session->userdata('is_loged_in');
         $logedin_data = $this->session->userdata('loged_in_user');
 
-        if (!empty($is_logedin) || $is_logedin == true) {
+        if (!empty($is_logedin) && $is_logedin == true) {
             if (!isset($logedin_data['username'])) {
-                $this->load->view('login_view');
+                redirect('dashboard');
             }
-        } else {
-            //If no loged in, redirect to login page
-            $this->load->view('login_view');
         }
-        redirect('dashboard');
+        $this->load->view('login_view');
+
 
     }
 
 
     // Check for user login process
-    public function user_login_process()
+    public
+    function user_login_process()
     {
 
         // Retrieve session data
@@ -83,7 +82,8 @@ class Login extends CI_Controller
     }
 
     // Logout from admin page
-    public function logout()
+    public
+    function logout()
     {
         // Destroying session data
         $this->session->sess_destroy();
