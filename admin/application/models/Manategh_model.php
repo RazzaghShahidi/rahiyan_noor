@@ -24,6 +24,19 @@ class Manategh_model extends CI_Model
     }
 
 
+    //insert mantaghe
+    function update($id, $data)
+    {
+        $this->db->where('manategh_id',$id);
+        $updated_id=$this->db->update('manategh', $data);
+        if ($updated_id) {
+            return $updated_id;
+        }
+        return false;
+    }
+
+
+
     //get all manategh
     function get_all_manategh()
     {
@@ -38,10 +51,13 @@ class Manategh_model extends CI_Model
         return $this->db->count_all("manategh");
     }
 
-    public function fetch_manategh($limit, $start)
+    public function fetch_manategh($limit, $start,$id)
     {
         $this->db->limit($limit, $start);
         $query = $this->db->get("manategh");
+        if(isset($id)){
+            $this->db->where('manategh_id',$id);
+        }
 
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $row) {

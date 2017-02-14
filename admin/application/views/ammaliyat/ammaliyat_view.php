@@ -50,9 +50,9 @@
                             <td><?php echo $ammaliyat["ammaliyat_description"]; ?></td>
                             <td>
                                 <p data-placement="top" data-toggle="tooltip" title="Edit">
-                                    <button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"
-                                            data-target="#edit"><span class="glyphicon glyphicon-pencil"></span>
-                                    </button>
+                                    <a href="<?php base_url() ?>ammaliyat/edite/<?php echo $ammaliyat["ammaliyat_id"]; ?>"
+                                       class="btn btn-primary btn-xs" data-title="Edit"
+                                       data-toggle="modal"><span class="glyphicon glyphicon-pencil"></span></a>
                                 </p>
                             </td>
                             <td>

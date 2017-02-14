@@ -13,8 +13,6 @@ class Ammaliyat extends RN_Controller
         parent::__construct();
         $this->load->model('ammaliyat_model');
         $this->load->library("pagination");
-
-
     }
 
     function index()
@@ -22,6 +20,7 @@ class Ammaliyat extends RN_Controller
         $data["username"] = $this->username;
         $data['controller_name'] = "ammaliyat";
 
+        //intial pagination
         $config = array();
         $config['next_link'] = '&gt;';
         $config['prev_link'] = '&lt;';
@@ -39,10 +38,18 @@ class Ammaliyat extends RN_Controller
         $config["uri_segment"] = 3;//@todo should fix in server
         $this->pagination->initialize($config);
 
+        //setting offset of pagination record
         $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-        $ammaliyat = $this->ammaliyat_model->fetch_ammaliyat($config["per_page"], $page);
+
+        $ammaliyat = $this->ammaliyat_model->fetch_ammaliyat($config["per_page"], $page,null);
+
         $data["results"] = array();
-        foreach ($ammaliyat as $key => $value) {
+        /**
+         * $ammaliyat now has array of ammaliyat that is duplicated because of manategh
+         * should check duplicated items and store theme in $data['result'] and store manategh detail in nested array
+         * of it's ammaliyat
+         */
+        foreach ($ammaliyat as  $value) {
             $ammaliyat_id = $value['ammaliyat_id'];
             if (array_key_exists($ammaliyat_id, $data["results"])) {
                 $data["results"][$ammaliyat_id]["manategh_name"] .= " ,{$value['manategh_name']}";
@@ -76,8 +83,9 @@ class Ammaliyat extends RN_Controller
     }
 
 
-    function add_ammaliyat()
+    function add()
     {
+        $view_data['form_type'] = "add";
         $this->load->model('manategh_model');
         $this->load->library('form_validation');
         $view_data['massage'] = "لطفا اطلاعات عملیات را وارد کنید: ";
@@ -128,6 +136,83 @@ class Ammaliyat extends RN_Controller
         $this->template->load('ammaliyat/add_ammaliyat_view', $view_data);
 
 
+    }
+
+
+    function edite($id)
+    {
+        $this->load->model('manategh_model');
+        $view_data["username"]        = $this->username;
+        $view_data['form_type']       = "edite/" . $id;
+        $view_data['massage']         = "اطلاعات برای ویرایش آماده شده است: ";
+        $view_data['controller_name'] = "ammaliyat";
+
+
+        if ($this->input->post()) { //if form sent
+
+            //validate add ammaliyat form data
+            $this->form_validation->set_rules('ammaliyat_name', 'نام عملیات', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('ammaliyat_commander_name', 'نام فرمانده', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('ammaliyat_start_date', 'تاریخ شروع', 'trim|xss_clean|callback_checkDateFormat');
+            $this->form_validation->set_rules('ammaliyat_end_date', 'تاریخ پایان عملیات', 'trim|xss_clean|callback_checkDateFormat');
+            $this->form_validation->set_rules('ammaliyat_operation_code', 'رمز عملیات', 'trim|xss_clean');
+            $this->form_validation->set_rules('ammaliyat_Strength', 'نیروهای عمل کننده', 'trim|xss_clean');
+            $this->form_validation->set_rules('ingredients[]', 'مناطق عملیات', 'trim|xss_clean');
+            $this->form_validation->set_rules('ammaliyat_description', 'توضیحات', 'trim|xss_clean');
+
+
+            if ($this->form_validation->run() == true) {
+
+                //geting form data and store them in data array for insert to data base
+
+                $data['ammaliyat_name'] = $this->input->post('ammaliyat_name');
+                $data['ammaliyat_commander_name'] = $this->input->post('ammaliyat_commander_name');
+                $data['ammaliyat_start_date'] = $this->input->post('ammaliyat_start_date');
+                $data['ammaliyat_end_date'] = $this->input->post('ammaliyat_end_date');
+                $data['ammaliyat_operation_code'] = $this->input->post('ammaliyat_operation_code');
+                $data['ammaliyat_Strength'] = $this->input->post('ammaliyat_Strength');
+                $data['ammaliyat_description'] = $this->input->post('ammaliyat_description');
+                $manategh = $_POST['ingredients'];
+
+                //insert data array into database (insert ammaliyat into database)
+                $ammaliyat_id = $this->ammaliyat_model->update($data, $manategh);
+
+                //if insert was sucsess then set sucsess massage
+                if ($ammaliyat_id) {
+                    $view_data['massage'] = "اطلاعات ویرایش شد.";
+                } else {
+                    //Field to sent form then set fail massage
+                    $view_data['massage'] = "ویرایش انجام نشد.";
+                }
+            }
+        }
+
+
+        $ammaliyat = $this->ammaliyat_model->fetch_ammaliyat(1, 0, $id);
+        $view_data["manategh"] = $this->manategh_model->get_all_manategh();//get list of manategh to display in select manategh
+        $view_data["results"] = array();
+        foreach ($ammaliyat as $key => $value) {
+            $ammaliyat_id = $value['ammaliyat_id'];
+            if (array_key_exists($ammaliyat_id, $view_data["results"])) {
+                $data["results"][$ammaliyat_id]["manategh_name"] .= " ,{$value['manategh_name']}";
+            } else {
+                $data["results"][$ammaliyat_id] = array(
+                    'ammaliyat_id' => $value['ammaliyat_id'],
+                    'ammaliyat_name' => $value['ammaliyat_name'],
+                    'ammaliyat_start_date' => $value['ammaliyat_start_date'],
+                    'ammaliyat_end_date' => $value['ammaliyat_end_date'],
+                    'ammaliyat_operation_code' => $value['ammaliyat_operation_code'],
+                    'ammaliyat_Strength' => $value['ammaliyat_Strength'],
+                    'ammaliyat_commander_name' => $value['ammaliyat_commander_name'],
+                    'ammaliyat_description' => $value['ammaliyat_description'],
+                    'manategh_id' => $value['manategh_id'],
+                    'manategh_name' => $value['manategh_name'],
+                );
+            }
+
+        }
+
+        $this->template->load('ammaliyat/add_ammaliyat_view', $view_data);
     }
 
 

@@ -40,14 +40,15 @@
                             <td><?php echo $manategh->manategh_description; ?></td>
                             <td>
                                 <p data-placement="top" data-toggle="tooltip" title="Edit">
-                                    <button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"
-                                            data-target="#edit"><span class="glyphicon glyphicon-pencil"></span>
-                                    </button>
+                                    <a href="<?php base_url() ?>manategh/edite/<?php echo $manategh->manategh_id; ?>"
+                                       class="btn btn-primary btn-xs" data-title="Edit"
+                                       data-toggle="modal"><span class="glyphicon glyphicon-pencil"></span></a>
                                 </p>
                             </td>
                             <td>
                                 <p data-placement="top" data-toggle="tooltip" title="Delete">
-                                         <button class="btn btn-danger btn-xs delete_me" data-title="Delete" data-toggle="modal" id="<?php echo $manategh->manategh_id ?>"
+                                    <button class="btn btn-danger btn-xs delete_me" data-title="Delete"
+                                            data-toggle="modal" id="<?php echo $manategh->manategh_id ?>"
                                             data-target="#delete"><span class="glyphicon glyphicon-trash"></span>
                                     </button>
                                 </p>

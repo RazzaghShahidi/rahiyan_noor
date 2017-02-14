@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Created by RAZZAGH SHAHIDI.(razagh.shahidi74@gmail.com)
- * Date: 02/08/2017
- * Time: 09:12 PM
- *Description:
+ * @Created by RAZZAGH SHAHIDI.(razagh.shahidi74@gmail.com)
+ * @Date: 02/08/2017
+ * @Time: 09:12 PM
+ *@Description:
  */
 class Ammaliyat_model extends CI_Model
 {
@@ -14,19 +14,31 @@ class Ammaliyat_model extends CI_Model
     }
 
 
-    //insert ammaliyat
+    /**@
+     * @param $data
+     * @param $manategh
+     * @return bool
+     * @description insert ammaliyat into ammaliyat table
+     *              and insert each relation with manategh into ammaliyat_manategh
+     */
     function insert($data, $manategh)
     {
+        //insert ammaliyat detail in ammaliyat_table
         $this->db->insert('ammaliyat', $data);
+
+        //getting id of inserted ammaliyat for inserting in ammaliyat_manategh
         $inserted_id = $this->db->insert_id();
+
+        //inserting relation with manategh in ammaliyat_manategh
         foreach ($manategh as $mantaghe) {
-            $da = array(
-                'id' => NULL,
+            //for each manategh insert in ammaliyat_manategh
+            $relation = array(
                 'ammaliyat_id' => $inserted_id,
-                'manategh_id' => $mantaghe
+                'manategh_id' => $mantaghe,
             );
-            $this->db->insert('ammaliyat_manategh', $da);
+            $this->db->insert('ammaliyat_manategh', $relation);
         }
+
         if ($inserted_id) {
             return $inserted_id;
         } else {
@@ -34,6 +46,13 @@ class Ammaliyat_model extends CI_Model
         }
     }
 
+    /**@
+     * @param $ammaliyat
+     * @param $mantaghe_id
+     * @return bool
+     * @return object of ammaliyat_id
+     * @description get ammaliyat_id with specific manategh_id (return just ammaliyat_id)
+     */
     function get_ammaliyat_id($ammaliyat, $mantaghe_id)
     {
         if ($ammaliyat == "ammaliyat") {
@@ -46,6 +65,12 @@ class Ammaliyat_model extends CI_Model
         }
     }
 
+
+    /**@
+     * @param $ammaliyat_id
+     * @return mixed
+     * @description get ammaliyat detail depemd on ammaliyat_id (no detail about manategh)
+     */
     function get_depend_ammaliyat($ammaliyat_id)
     {
         $this->db->where('ammaliyat_id', $ammaliyat_id);
@@ -53,25 +78,38 @@ class Ammaliyat_model extends CI_Model
         return $this->db->get();
     }
 
-    //############################################
+
+    /**@
+     * @return mixed
+     * @description return number of ammaliyat
+     */
     public function ammaliyat_count()
     {
         return $this->db->count_all("ammaliyat");
     }
 
-    public function fetch_ammaliyat($limit, $start)
-    {
-        $query_string = "SELECT ammaliyat.ammaliyat_id,ammaliyat.ammaliyat_name,ammaliyat.ammaliyat_start_date,ammaliyat.ammaliyat_end_date, ";
-        $query_string .= "ammaliyat.ammaliyat_operation_code,ammaliyat.ammaliyat_Strength,ammaliyat.ammaliyat_commander_name, ";
-        $query_string .= "ammaliyat.ammaliyat_description,manategh.manategh_id,manategh.manategh_name ";
-        $query_string .= "from ammaliyat join ammaliyat_manategh join manategh ";
-        $query_string .= "ON ammaliyat_manategh.ammaliyat_id = ammaliyat.ammaliyat_id && manategh.manategh_id = ammaliyat_manategh.manategh_id ";
-        $query_string .= "LIMIT " . $limit . " OFFSET " . $start;
 
-        $query = $this->db->query($query_string);
+    /**@
+     * @param $limit
+     * @param $start
+     * @param $id
+     * @return array|bool
+     * @description fetch all ammaliyat with them manategh details
+     */
+    public function fetch_ammaliyat($limit, $start, $id)
+    {
+        $this->db->select('*');
+        $this->db->from('ammaliyat');
+        $this->db->join('ammaliyat_manategh', 'ammaliyat_manategh.ammaliyat_id = ammaliyat.ammaliyat_id');
+        $this->db->join('manategh', 'manategh.manategh_id = ammaliyat_manategh.manategh_id');
+        $this->db->limit($limit, $start);
+        if (isset($id)) {
+            //for getting spesific ammaliyat with certain ammaliyat_id
+            $this->db->where("ammaliyat.ammaliyat_id", $id);
+        }
+        $query = $this->db->get();
 
         if ($query->num_rows() > 0) {
-
             foreach ($query->result_array() as $row) {
                 $data[] = $row;
             }
@@ -80,18 +118,38 @@ class Ammaliyat_model extends CI_Model
         return false;
     }
 
-
+    /**@
+     * @param $id
+     * @return bool
+     * @description delete ammaliyat from ammaliyat table and ammaliyat_manategh and depended relation with shahidan, media,term tables
+     */
     // Function to Delete selected record from table .
     function delete_ammaliyat_id($id)
     {
+        //dalete from table ammaliyat
         $this->db->where('ammaliyat_id', $id);
         $this->db->delete('ammaliyat');
+        $status = $this->db->affected_rows();
 
+        //dalete from table ammaliyat_manategh
         $this->db->where('ammaliyat_id', $id);
         $this->db->delete('ammaliyat_manategh');
 
+        //dalete from table shahidan_ammaliyat
+        $this->db->where('ammaliyat_id', $id);
+        $this->db->delete('shahidan_ammaliyat');
 
-        if ($this->db->affected_rows()) {
+        //dalete from table media_term
+        $this->db->where('term_type', 'ammaliyat');
+        $this->db->where('term_id', $id);
+        $this->db->delete('media_term');
+
+        //dalete from table meta_term
+        $this->db->where('term_type', 'ammaliyat');
+        $this->db->where('term_id', $id);
+        $this->db->delete('meta_term');
+
+        if ($status) {
             return true;
         } else {
             return false;

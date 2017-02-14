@@ -16,7 +16,7 @@
     <title>Angular </title>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap.min.css" rel="stylesheet">
 
     <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
 
@@ -80,32 +80,38 @@
     <!--  Start Sidebar    -->
     <div class="sm-side">
         <ul class="wrapper">
-            <li><a href="dashboard.html">صندوق ورودی</a></li>
+            <li><a href="<?php echo base_url()?>dashboard">صفحه اصلی</a></li>
             <li><a href="#">مدیریت مناطق<span class="glyphicon glyphicon-chevron-right down-up"
                                               aria-hidden="true"></span></a>
                 <ul>
-                    <li><a href="<?php base_url() ?>manategh/add_mantaghe">افزودن مناطق</a></li>
+                    <li><a href="<?php base_url() ?>manategh/add">افزودن مناطق</a></li>
                     <li><a href="<?php base_url() ?>manategh">لیست مناطق</a></li>
                 </ul>
             </li>
             <li><a href="#">مدیریت عملیات<span class="glyphicon glyphicon-chevron-right down-up"
                                                aria-hidden="true"></span></a>
                 <ul>
-                    <li><a href="templates/addamaliyat.html">افزودن عملیات</a></li>
-                    <li><a href="templates/listamaliyat.html">لیست عملیات</a></li>
+                    <li><a href="<?php base_url() ?>ammaliyat/add">افزودن عملیات</a></li>
+                    <li><a href="<?php base_url() ?>ammaliyat">لیست عملیات</a></li>
                 </ul>
             </li>
             <li><a href="#">مدیریت شهدا<span class="glyphicon glyphicon-chevron-right down-up"
                                              aria-hidden="true"></span></a>
                 <ul>
-                    <li><a href="templates/addshahid.html">افزودن شهدا</a></li>
-                    <li><a href="templates/listshahid.html">لیست شهدا</a></li>
+                    <li><a href="<?php base_url() ?>shahidan/add">افزودن شهدا</a></li>
+                    <li><a href="<?php base_url() ?>shahidan">لیست شهدا</a></li>
                 </ul>
             </li>
             <li><a href="#">گالری<span class="glyphicon glyphicon-chevron-right down-up" aria-hidden="true"></span></a>
                 <ul>
-                    <li><a href="templates/addmedia.html">افزودن گالری</a></li>
-                    <li><a href="templates/listmedia.html">لیست گالری</a></li>
+                    <li><a href="<?php base_url() ?>media/add">افزودن گالری</a></li>
+                    <li><a href="<?php base_url() ?>media">لیست گالری</a></li>
+                </ul>
+            </li>
+            <li><a href="#">فایل ها<span class="glyphicon glyphicon-chevron-right down-up" aria-hidden="true"></span></a>
+                <ul>
+                    <li><a href="<?php base_url() ?>term/add">افزودن فایل</a></li>
+                    <li><a href="<?php base_url() ?>term">لیست فایل ها </a></li>
                 </ul>
             </li>
         </ul>

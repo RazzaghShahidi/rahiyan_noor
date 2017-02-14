@@ -8,7 +8,6 @@
  * @package		CodeIgniter
  * @subpackage	Libraries
  * @category	Sessions
- * @author		ExpressionEngine Dev Team
  * @link		http://codeigniter.com/user_guide/libraries/sessions.html
  */
 
