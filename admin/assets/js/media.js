@@ -84,7 +84,6 @@ jQuery(function () {
             var details="<div class='file_detils_wraper'><li class='uploaded_file_detils'>ذخیره شده با نام: " + element.file_name + "</li>";
             details +="<li class='uploaded_file_detils'> نوع فایل : " + element.file_type + "</li>";
             details +=" <li class='uploaded_file_detils'> سایز فایل: " + element.file_size + "</li>";
-            details +=" <li class='uploaded_file_detils'> سایز فایل: " + element.file_size + "</li>";
             details +="<li class='uploaded_file_detils'> محل ذخیره : " + element.full_path + "</li>";
             details +=" </div>";
             //

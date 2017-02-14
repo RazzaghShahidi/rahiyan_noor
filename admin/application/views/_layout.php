@@ -84,34 +84,34 @@
             <li><a href="#">مدیریت مناطق<span class="glyphicon glyphicon-chevron-right down-up"
                                               aria-hidden="true"></span></a>
                 <ul>
-                    <li><a href="<?php base_url() ?>manategh/add">افزودن مناطق</a></li>
-                    <li><a href="<?php base_url() ?>manategh">لیست مناطق</a></li>
+                    <li><a href="<?php echo base_url() ?>manategh/add">افزودن مناطق</a></li>
+                    <li><a href="<?php echo base_url() ?>manategh">لیست مناطق</a></li>
                 </ul>
             </li>
             <li><a href="#">مدیریت عملیات<span class="glyphicon glyphicon-chevron-right down-up"
                                                aria-hidden="true"></span></a>
                 <ul>
-                    <li><a href="<?php base_url() ?>ammaliyat/add">افزودن عملیات</a></li>
-                    <li><a href="<?php base_url() ?>ammaliyat">لیست عملیات</a></li>
+                    <li><a href="<?php echo base_url() ?>ammaliyat/add">افزودن عملیات</a></li>
+                    <li><a href="<?php echo base_url() ?>ammaliyat">لیست عملیات</a></li>
                 </ul>
             </li>
             <li><a href="#">مدیریت شهدا<span class="glyphicon glyphicon-chevron-right down-up"
                                              aria-hidden="true"></span></a>
                 <ul>
-                    <li><a href="<?php base_url() ?>shahidan/add">افزودن شهدا</a></li>
-                    <li><a href="<?php base_url() ?>shahidan">لیست شهدا</a></li>
+                    <li><a href="<?php echo base_url() ?>shahidan/add">افزودن شهدا</a></li>
+                    <li><a href="<?php echo base_url() ?>shahidan">لیست شهدا</a></li>
                 </ul>
             </li>
             <li><a href="#">گالری<span class="glyphicon glyphicon-chevron-right down-up" aria-hidden="true"></span></a>
                 <ul>
-                    <li><a href="<?php base_url() ?>media/add">افزودن گالری</a></li>
-                    <li><a href="<?php base_url() ?>media">لیست گالری</a></li>
+                    <li><a href="<?php echo base_url() ?>media/add">افزودن گالری</a></li>
+                    <li><a href="<?php echo base_url() ?>media">لیست گالری</a></li>
                 </ul>
             </li>
             <li><a href="#">فایل ها<span class="glyphicon glyphicon-chevron-right down-up" aria-hidden="true"></span></a>
                 <ul>
-                    <li><a href="<?php base_url() ?>term/add">افزودن فایل</a></li>
-                    <li><a href="<?php base_url() ?>term">لیست فایل ها </a></li>
+                    <li><a href="<?php echo base_url() ?>term/add">افزودن فایل</a></li>
+                    <li><a href="<?php echo base_url() ?>term">لیست فایل ها </a></li>
                 </ul>
             </li>
         </ul>
