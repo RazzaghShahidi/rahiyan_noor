@@ -32,6 +32,7 @@
                     <th>تاریخ تولد</th>
                     <th>تاریخ شهادت</th>
                     <th> شهر تولد</th>
+                    <th>عملیات ها</th>
                     <th>زندگی نامه</th>
                     <th> وصیت نامه</th>
                     <th>تصویر</th>
@@ -39,31 +40,38 @@
                     <th>حذف</th>
                     </thead>
                     <tbody>
-                    <?php foreach ($shahidan as $shahid): ?>
-                    <tr>
-                        <td><?php echo $shahid["shahidan_name"]; ?></td>
-                        <td><?php echo $shahid["shahidan_familly"]; ?></td>
-                        <td><?php echo $shahid["shahidan_date_of_birth"]; ?></td>
-                        <td><?php echo $shahid["shahidan_date_of_deth"]; ?></td>
-                        <td><?php echo $shahid["ammaliyat_name"]; ?></td>
-                        <td><?php echo $shahid["shahidan_biography"]; ?></td>
-                        <td><?php echo $shahid["shahidan_will"]; ?></td>
-                        <td><img src="<?php echo $shahid["shahidan_picture"]; ?>" alt="تصویر شهید"></td>
-                        <td>
-                            <p data-placement="top" data-toggle="tooltip" title="Edit">
-                                <button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"
-                                        data-target="#edit"><span class="glyphicon glyphicon-pencil"></span></button>
-                            </p>
-                        </td>
-                        <td>
-                            <p data-placement="top" data-toggle="tooltip" title="Delete">
-                                <button class="btn btn-danger btn-xs delete_me" data-title="Delete" data-toggle="modal" id="<?php echo $shahid["shahidan_id"] ?>"
-                                        data-target="#delete"><span class="glyphicon glyphicon-trash"></span>
-                                </button>
-                            </p>
-                        </td>
-                    </tr>
-                    <?php endforeach;;?>
+                    <?php foreach ($results as $shahid): ?>
+                        <tr>
+                            <td><?php echo $shahid["shahidan_name"]; ?></td>
+                            <td><?php echo $shahid["shahidan_familly"]; ?></td>
+                            <td><?php echo $shahid["shahidan_date_of_birth"]; ?></td>
+                            <td><?php echo $shahid["shahidan_date_of_deth"]; ?></td>
+                            <td><?php echo$shahid["shahidan_birth_place"]; ?></td>
+                            <td><?php foreach ($shahid['ammaliyat'] as $value) {
+                                    echo $value["ammaliyat_name"].', ';
+                                }
+                                 ?>
+                            </td>
+                            <td><?php echo  substr($shahid["shahidan_biography"],0 ,100); ?>...</td>
+                            <td><?php echo  substr($shahid["shahidan_will"],0,100); ?>...</td>
+                            <td><img src="<?php echo $shahid["shahidan_picture"]; ?>" alt="تصویر شهید"></td>
+                            <td>
+                                <p data-placement="top" data-toggle="tooltip" title="Edit">
+                                    <a href="<?php echo base_url() ?>shahidan/edite/<?php echo $shahid["shahidan_id"]; ?>"
+                                       class="btn btn-primary btn-xs" data-title="Edit"
+                                       data-toggle="modal"><span class="glyphicon glyphicon-pencil"></span></a>
+                                </p>
+                            </td>
+                            <td>
+                                <p data-placement="top" data-toggle="tooltip" title="Delete">
+                                    <button class="btn btn-danger btn-xs delete_me" data-title="Delete"
+                                            data-toggle="modal" id="<?php echo $shahid["shahidan_id"] ?>"
+                                            data-target="#delete"><span class="glyphicon glyphicon-trash"></span>
+                                    </button>
+                                </p>
+                            </td>
+                        </tr>
+                    <?php endforeach;; ?>
                     </tbody>
 
                 </table>

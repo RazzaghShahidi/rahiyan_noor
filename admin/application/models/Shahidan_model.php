@@ -14,7 +14,6 @@ class Shahidan_model extends CI_Model
     }
 
 
-
     //insert ammaliyat
     function insert($data, $ammaliyat)
     {
@@ -36,7 +35,26 @@ class Shahidan_model extends CI_Model
     }
 
 
+    function update($id, $data, $ammaliyat)
+    {
+        $this->db->where('shahidan_id', $id);
+        $updated_id = $this->db->update('shahidan', $data);
 
+        $this->db->where('shahidan_id', $id);
+        $this->db->delete('shahidan_ammaliyat');
+
+        //inserting relation with ammaliyat in shahidan_ammaliyat
+        foreach ($ammaliyat as $ammal) {
+            //for each ammaliyat insert in shahidan_ammaliyat
+            $relation = array(
+                'shahidan_id' => $id,
+                'ammaliyat_id' => $ammal,
+            );
+            $this->db->insert('shahidan_ammaliyat', $relation);
+        }
+        return $updated_id;
+
+    }
 
 
 //#############################################
@@ -61,30 +79,35 @@ class Shahidan_model extends CI_Model
     }
 
 
-
-
     //############################################
     public function shahidan_count()
     {
         return $this->db->count_all("shahidan");
     }
 
-    public function fetch_shahidan($limit, $start)
+    public function fetch_shahidan($limit, $start, $id)
     {
-        $query_string = "SELECT shahidan.shahidan_id, shahidan.shahidan_name , shahidan.shahidan_familly,shahidan.shahidan_birth_place, ";
-        $query_string.= " shahidan.shahidan_date_of_birth ,shahidan.shahidan_date_of_deth , shahidan.shahidan_biography , shahidan.shahidan_will , ";
-        $query_string.="shahidan.shahidan_picture, ammaliyat.ammaliyat_id , ammaliyat.ammaliyat_name ";
-        $query_string.= "FROM shahidan join shahidan_ammaliyat join ammaliyat ";
-        $query_string.= "ON shahidan_ammaliyat.ammaliyat_id = ammaliyat.ammaliyat_id && shahidan.shahidan_id = shahidan_ammaliyat.shahidan_id ";
-        $query_string .= "LIMIT " . $limit . " OFFSET " . $start;
+        $this->db->select('*');
+        $this->db->from('shahidan');
+        $this->db->limit($limit, $start);
+        if (isset($id)) {
+            //for getting spesific shahidan with certain shahidan_id
+            $this->db->where("shahidan.shahidan_id", $id);
+        }
+        $query = $this->db->get()->result_array();
 
-        $query = $this->db->query($query_string);
+        //get ammaliyat of each shahida
+        foreach ($query as $key => $shahidan) {
+            $result[$key] = $shahidan;
+            $this->db->select('*');
+            $this->db->from('shahidan_ammaliyat');
+            $this->db->join('ammaliyat', 'shahidan_ammaliyat.ammaliyat_id=ammaliyat.ammaliyat_id');
+            $this->db->where('shahidan_ammaliyat.shahidan_id', $shahidan['shahidan_id']);
+            $result[$key]["ammaliyat"] = $this->db->get()->result_array();
+        }
 
-        if ($query->num_rows() > 0) {
-            foreach ($query->result_array() as $row) {
-                $data[] = $row;
-            }
-            return $data;
+        if (count($query) > 0) {
+            return $result;
         }
         return false;
     }
@@ -98,6 +121,14 @@ class Shahidan_model extends CI_Model
 
         $this->db->where('shahidan_id', $id);
         $this->db->delete('shahidan_ammaliyat');
+
+        $this->db->where('term_type', "shahidan");
+        $this->db->where('term_id', $id);
+        $this->db->delete('media_term');
+
+        $this->db->where('term_type', "shahidan");
+        $this->db->where('term_id', $id);
+        $this->db->delete('meta_term');
 
 
         if ($this->db->affected_rows()) {

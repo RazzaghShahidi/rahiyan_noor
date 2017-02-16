@@ -71,7 +71,7 @@ class Media extends RN_Controller
     }
 
 
-    function add_media()
+    function add()
     {
         $view_data['massage']= "اطلاعات خود را وارد کنید";
 
@@ -187,6 +187,7 @@ class Media extends RN_Controller
                     $errors++;
                 }
                 $file_details[$i] = $this->upload->data();
+
             }
 
             if ($errors > 0) {

@@ -8,10 +8,10 @@ $(function () {
         });
         $.ajax({
             type: "post",
-            url: "manategh/delete_manategh_id",
+            url: window.location.origin+"/rahiyan_noor/admin/manategh/delete_manategh_id",
             cache: false,
             data: 'manategh_id=' + manateghId,
-            success: function (response) {
+            success: function (response) {console.log(response);
                 try {
                     if (response == 'true') {
                         item.slideUp('slow', function () {

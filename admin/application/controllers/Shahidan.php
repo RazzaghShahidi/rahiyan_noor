@@ -20,6 +20,7 @@ class Shahidan extends RN_Controller
     //display list shahidan
     function index()
     {
+        $data['controller_name']= "shahidan";
         $data["username"] = $this->username;
 
         $config = array();
@@ -40,32 +41,8 @@ class Shahidan extends RN_Controller
         $this->pagination->initialize($config);
 
         $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-        $shahidan = $this->shahidan_model->fetch_shahidan($config["per_page"], $page);
+        $data["results"] = $this->shahidan_model->fetch_shahidan($config["per_page"], $page,null);
 
-
-        $data["shahidan"] = array();
-        foreach ($shahidan as $key => $value) {
-            $shahidan_id = $value['shahidan_id'];
-            if (array_key_exists($shahidan_id, $data["shahidan"])) {
-                $data["shahidan"][$shahidan_id]["ammaliyat_name"] .= " ,{$value['ammaliyat_name']}";
-            } else {
-                $data["shahidan"][$shahidan_id] = array(
-                    'shahidan_id' =>             $value['shahidan_id'],
-                    'shahidan_name' =>           $value['shahidan_name'],
-                    'shahidan_familly' =>        $value['shahidan_familly'],
-                    'shahidan_birth_place' =>    $value['shahidan_birth_place'],
-                    'shahidan_date_of_birth' =>  $value['shahidan_date_of_birth'],
-                    'shahidan_date_of_deth' =>   $value['shahidan_date_of_deth'],
-                    'shahidan_biography' =>      $value['shahidan_biography'],
-                    'shahidan_will' =>           $value['shahidan_will'],
-                    'shahidan_picture' =>        $value['shahidan_picture'],
-                    'ammaliyat_id' =>            $value['ammaliyat_id'],
-                    'ammaliyat_name' =>          $value['ammaliyat_name'],
-                );
-            }
-
-        }
-        $data['controller_name']= "shahidan";
         $data["links"] = $this->pagination->create_links();
         $this->template->load('shahidan/shahidan_view', $data);
     }
@@ -79,9 +56,12 @@ class Shahidan extends RN_Controller
 
 
     //add shahidan
-    function add_shahidan()
+    function add()
     {
+        $view_data['form_type'] = "add";
         $view_data['massage'] = "لطفا اطلاعات شهید را وارد کنید: ";
+        $view_data['controller_name'] = "shahidan";
+        $view_data["username"] = $this->username;
 
         if ($_POST) {
 
@@ -123,12 +103,65 @@ class Shahidan extends RN_Controller
             }
         }
 
-        $view_data["username"] = $this->username;
         $view_data["manategh"] = $this->get_all_manategh();
-        $view_data['controller_name'] = "shahidan";
 
         $this->template->load('shahidan/add_shahidan_view', $view_data);
     }
+
+
+    function edite($id)
+    {
+        $this->load->model('manategh_model');
+        $view_data["username"]        = $this->username;
+        $view_data['form_type']       = "edite/" . $id;
+        $view_data['massage']         = "اطلاعات برای ویرایش آماده شده است: ";
+        $view_data['controller_name'] = "shahidan";
+
+        if ($this->input->post()) { //if form sent
+
+            //validate add ammaliyat form data
+            $this->form_validation->set_rules('shahidan_name', 'نام شهید', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('shahidan_familly', 'نام خانوادگی شهید ', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('shahidan_date_of_birth', 'تاریخ تولد', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('shahidan_date_of_deth', 'تاریخ شهادت', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('shahidan_birth_place', 'مکان شهادت', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('ingredients[]', 'عملیات', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('shahidan_will', 'وصیت نامه', 'xss_clean');
+            $this->form_validation->set_rules('shahidan_biography', 'زندگی نامه', 'xss_clean');
+
+
+            if ($this->form_validation->run() == true) {
+
+                //geting form data and store them in data array for insert to data base
+
+                $data['shahidan_name']          = $this->input->post('shahidan_name');
+                $data['shahidan_familly']       = $this->input->post('shahidan_familly');
+                $data['shahidan_date_of_birth'] = $this->input->post('shahidan_date_of_birth');
+                $data['shahidan_date_of_deth']  = $this->input->post('shahidan_date_of_deth');
+                $data['shahidan_birth_place']   = $this->input->post('shahidan_birth_place');
+                $data['shahidan_will']          = $this->input->post('shahidan_will');
+                $data['shahidan_biography']     = $this->input->post('shahidan_biography');
+                $ammaliyat=$_POST['ingredients'];
+
+                //insert data array into database (insert ammaliyat into database)
+                $shahidan_id = $this->shahidan_model->update($id,$data,$ammaliyat);
+
+                //if insert was sucsess then set sucsess massage
+                if ($shahidan_id) {
+                    $view_data['massage'] = "اطلاعات ویرایش شد.";
+                } else {
+                    //Field to sent form then set fail massage
+                    $view_data['massage'] = "ویرایش انجام نشد.";
+                }
+            }
+        }
+        $view_data["results"]=$this->shahidan_model->fetch_shahidan(1, 0,$id)[0];
+        $view_data["manategh"] = $this->manategh_model->get_all_manategh();//get list of manategh to display in select manategh
+
+        $this->template->load('shahidan/add_shahidan_view', $view_data);
+    }
+
+
 
     function get_all_manategh()
     {

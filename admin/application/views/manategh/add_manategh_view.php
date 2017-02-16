@@ -14,7 +14,7 @@
     <!--           end title field     -->
     <!--      Start adding region     -->
     <?php echo validation_errors(); ?>
-    <?php echo form_open('manategh/'.$form_type); ?>
+    <?php echo form_open(base_url().'manategh/'.$form_type); ?>
     <div class="form-group">
         <label for="Namemantaghe">نام منطقه: </label>
         <?php echo form_input(array('name' => 'name', 'class' => 'form-control', 'id' => 'Namemantaghe', 'placeholder' => 'فکه', 'value' => isset($results)?$results[0]->manategh_name:null)); ?>

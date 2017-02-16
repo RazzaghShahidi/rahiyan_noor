@@ -47,12 +47,15 @@ class Media_model extends CI_Model
     {
         $this->db->select()
             ->from('media')
-            ->join('media_term','media.media_id=media_term.media_id')
                 ->limit($limit)
                 ->offset($start);
-        $query = $this->db->get();
-
-        echo "<pre>";print_r($query->result());exit();
+        $query = $this->db->get()->result_array();
+        if (count($query)> 0) {
+           foreach ($query as $item =>$value){
+               $query[$item]['terms']="s";
+           }
+        }
+        echo "<pre>";print_r($query);exit();
 
         if ($query->num_rows() > 0) {
             foreach ($query->result_array() as $row) {

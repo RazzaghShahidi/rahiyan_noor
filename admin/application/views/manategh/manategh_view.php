@@ -40,7 +40,7 @@
                             <td><?php echo $manategh->manategh_description; ?></td>
                             <td>
                                 <p data-placement="top" data-toggle="tooltip" title="Edit">
-                                    <a href="<?php base_url() ?>manategh/edite/<?php echo $manategh->manategh_id; ?>"
+                                    <a href="<?php echo base_url() ?>manategh/edite/<?php echo $manategh->manategh_id; ?>"
                                        class="btn btn-primary btn-xs" data-title="Edit"
                                        data-toggle="modal"><span class="glyphicon glyphicon-pencil"></span></a>
                                 </p>

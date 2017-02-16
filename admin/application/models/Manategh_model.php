@@ -24,7 +24,12 @@ class Manategh_model extends CI_Model
     }
 
 
-    //insert mantaghe
+    /**@
+     * @param $id
+     * @param $data
+     * @return bool
+     * @description insert mantaghe
+     */
     function update($id, $data)
     {
         $this->db->where('manategh_id',$id);
@@ -36,28 +41,37 @@ class Manategh_model extends CI_Model
     }
 
 
-
-    //get all manategh
+    /**@
+     * @return mixed
+     * @description get all manategh
+     */
     function get_all_manategh()
     {
         return $this->db->get('manategh')->result_array();
     }
 
-
-//###############################################################
-
+    /**@
+     * @return mixed
+     */
     public function manategh_count()
     {
         return $this->db->count_all("manategh");
     }
 
+
+    /**@
+     * @param $limit
+     * @param $start
+     * @param $id
+     * @return array|bool
+     */
     public function fetch_manategh($limit, $start,$id)
     {
         $this->db->limit($limit, $start);
-        $query = $this->db->get("manategh");
         if(isset($id)){
             $this->db->where('manategh_id',$id);
         }
+        $query = $this->db->get("manategh");
 
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $row) {
@@ -68,7 +82,12 @@ class Manategh_model extends CI_Model
         return false;
     }
 
-    // Function to Delete selected record from table .
+
+    /**@
+     * @param $id
+     * @return bool
+     * @description  Function to Delete selected record from table .
+     */
     function delete_manategh_id($id)
     {
         $this->db->where('manategh_id', $id);

@@ -43,7 +43,7 @@ function loadData(loadType, loadId) {
     $("#" + loadType + "_loader").fadeIn(400).html('لطفا صبر کنید... ');
     $.ajax({
         type: "POST",
-        url: "get_all_depend_ammaliyat",
+        url: window.location.origin+"/rahiyan_noor/admin/shahidan/get_all_depend_ammaliyat",
         data: dataString,
         cache: false,
         success: function (result) {

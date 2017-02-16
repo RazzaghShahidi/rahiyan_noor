@@ -27,6 +27,7 @@ jQuery(function () {
                 processData: false,
                 contentType: false,
                 success: function (uploadDetails) {
+                    console.log(uploadDetails);
                     $('.progress').hide();
                     displayUplodDetail(uploadDetails);
                     listFilesOnServer(uploadDetails);
@@ -70,10 +71,8 @@ jQuery(function () {
     function listFilesOnServer(uploadDetails) {
         var items = [];
         $.each(uploadDetails, function (index, element) {
-            console.log(element);
             items.push('<div><input class=" ' + element.file_name + '" name="uploaded_files[' + element.raw_name + '][server_path]" value="' + element.full_path + '" ><input type="hidden" name="uploaded_files[' + element.raw_name + '][size]" value="' + element.file_size + '" ><a href="#" data-file="' + element.file_name + '" class="remove-file"><i class="glyphicon glyphicon-remove"></i></a></div>');
         });
-        console.log(items);
         $('#files-list').append("").append(items.join(""));
     }
 
@@ -86,12 +85,6 @@ jQuery(function () {
             details +=" <li class='uploaded_file_detils'> سایز فایل: " + element.file_size + "</li>";
             details +="<li class='uploaded_file_detils'> محل ذخیره : " + element.full_path + "</li>";
             details +=" </div>";
-            //
-            // $("#uploaded_file_detils").append("<div class='file_detils_wraper'>");
-            // $("#uploaded_file_detils").append("<li class='uploaded_file_detils'>ذخیره شده با نام: " + element.file_name + "</li>");
-            // $("#uploaded_file_detils").append(" <li class='uploaded_file_detils'> نوع فایل : " + element.file_type + "</li>");
-            // $("#uploaded_file_detils").append(" <li class='uploaded_file_detils'> سایز فایل: " + element.file_size + "</li>");
-            // $("#uploaded_file_detils").append(" <li class='uploaded_file_detils'> محل ذخیره : " + element.full_path + "</li>");
             $("#uploaded_file_detils").append(details);
         });
     }
@@ -126,7 +119,7 @@ function loadData(loadType, loadId) {
     $("#" + loadType + "_loader").fadeIn(400).html('لطفا صبر کنید... ');
     $.ajax({
         type: "POST",
-        url: "get_all_depend_" + loadType,
+        url: window.location.origin+"/rahiyan_noor/admin/media/get_all_depend_" + loadType,
         data: dataString,
         cache: false,
         success: function (result) {

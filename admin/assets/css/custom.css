@@ -7,3 +7,33 @@
 	text-align: center;	
 	margin-bottom: 50px;
 }
+
+.file_detils_wraper{
+	border: 1px solid #bce8f1;
+	margin: 5px;
+	background-color:#afd9ee ;
+	width: 500px;
+}
+.file_detils_wraper li{
+	list-style: none;
+	padding: 3px;
+	margin: 5px;
+}
+
+#files-list div	input{
+	width:520px;
+	direction: ltr;
+}
+
+#selected-term-list li{
+	list-style: none;
+	display: inline-block;
+	padding: 10px;
+	border: 1px solid #ceeef1;
+	margin: 5px;
+	background-color: #afd9ee;
+}
+
+select{
+	padding: 5px;
+}

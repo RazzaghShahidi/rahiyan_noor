@@ -62,7 +62,7 @@
 
     <div id="mform"></div>
     <div class="form-group form-inline">
-        <ul id="manategh-selected-list">
+        <ulid="selected-term-list">
 
         </ul>
         <select onchange="selectState(this.options[this.selectedIndex].value, 'ammaliyat');selectIngredient(this,'manategh')">
@@ -71,18 +71,11 @@
                 <option value="<?php echo $mantaghe['manategh_id'] ?>"><?php echo $mantaghe['manategh_name'] ?></option>
             <?php endforeach; ?>
         </select>
-        <ul id="ammaliyat--selected-list">
-
-        </ul>
         <select id="ammaliyat_dropdown" onchange="selectState(this.options[this.selectedIndex].value, 'shahidan');selectIngredient(this,'ammaliyat')">
             <option>عملیات</option>
 
         </select>
         <span id="ammaliyat_loader"></span>
-
-        <ul id="shahidan-selected-list">
-
-        </ul>
         <select id="shahidan_dropdown" onchange="selectIngredient(this,'shahidan')">
             <option>شهدا</option>
         </select>

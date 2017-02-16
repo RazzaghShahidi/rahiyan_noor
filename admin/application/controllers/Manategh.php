@@ -107,9 +107,9 @@ class Manategh extends RN_Controller
         }
         $view_data["username"] = $this->username;
         $view_data['controller_name'] = 'manategh';
-
         $view_data['results'] = null;
         $view_data["results"] = $this->manategh_model->fetch_manategh(1, 0, $id);
+
         $this->template->load('manategh/add_manategh_view', $view_data);
     }
 }

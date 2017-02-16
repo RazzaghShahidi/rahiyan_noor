@@ -4,7 +4,7 @@
  * @Created by RAZZAGH SHAHIDI.(razagh.shahidi74@gmail.com)
  * @Date: 02/08/2017
  * @Time: 09:12 PM
- *@Description:
+ * @Description:
  */
 class Ammaliyat_model extends CI_Model
 {
@@ -45,6 +45,38 @@ class Ammaliyat_model extends CI_Model
             return false;
         }
     }
+
+
+
+    /**@
+     * @param $id
+     * @param $data
+     * @param $manategh
+     * @return mixed
+     * @description update ammaliyat in ammaliyat table and it's relation with manategh in
+     *               ammaliyat_manategh table
+     *
+     */
+    function update($id, $data, $manategh)
+    {
+        $this->db->where('ammaliyat_id', $id);
+        $updated_id = $this->db->update('ammaliyat', $data);
+
+        $this->db->where('ammaliyat_id',$id);
+        $this->db->delete('ammaliyat_manategh');
+
+        //inserting relation with manategh in ammaliyat_manategh
+        foreach ($manategh as $mantaghe) {
+            //for each manategh insert in ammaliyat_manategh
+            $relation = array(
+                'ammaliyat_id' => $id,
+                'manategh_id' => $mantaghe,
+            );
+            $this->db->insert('ammaliyat_manategh', $relation);
+        }
+        return $updated_id;
+    }
+
 
     /**@
      * @param $ammaliyat
@@ -100,20 +132,24 @@ class Ammaliyat_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('ammaliyat');
-        $this->db->join('ammaliyat_manategh', 'ammaliyat_manategh.ammaliyat_id = ammaliyat.ammaliyat_id');
-        $this->db->join('manategh', 'manategh.manategh_id = ammaliyat_manategh.manategh_id');
         $this->db->limit($limit, $start);
         if (isset($id)) {
             //for getting spesific ammaliyat with certain ammaliyat_id
             $this->db->where("ammaliyat.ammaliyat_id", $id);
         }
-        $query = $this->db->get();
+        $query = $this->db->get()->result_array();
+        foreach ($query as $key => $ammaliyat) {
+            $result[$key] = $ammaliyat;
+            $this->db->select('*');
+            $this->db->from('ammaliyat_manategh');
+            $this->db->join('manategh', 'ammaliyat_manategh.manategh_id=manategh.manategh_id');
+            $this->db->where('ammaliyat_manategh.ammaliyat_id', $ammaliyat['ammaliyat_id']);
+            $result[$key]["manategh"] = $this->db->get()->result_array();
+        }
 
-        if ($query->num_rows() > 0) {
-            foreach ($query->result_array() as $row) {
-                $data[] = $row;
-            }
-            return $data;
+        if (count($result) > 0) {
+
+            return $result;
         }
         return false;
     }
