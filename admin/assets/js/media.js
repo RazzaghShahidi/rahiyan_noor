@@ -27,7 +27,6 @@ jQuery(function () {
                 processData: false,
                 contentType: false,
                 success: function (uploadDetails) {
-                    console.log(uploadDetails);
                     $('.progress').hide();
                     displayUplodDetail(uploadDetails);
                     listFilesOnServer(uploadDetails);
@@ -37,7 +36,6 @@ jQuery(function () {
                     xhr.upload.addEventListener("progress", function (event) {
                         if (event.lengthComputable) {
                             var percentComplete = Math.round((event.loaded / event.total) * 100);
-                            // console.log(percentComplete);
 
                             $('.progress').show();
                             progressBar.css({width: percentComplete + "%"});
@@ -52,32 +50,48 @@ jQuery(function () {
         }
     });
 
+    //remove the media from list and database
     $('body').on('click', '.remove-file', function () {
         var me = $(this);
 
+        //ajax to delete media from database
         $.ajax({
             url: uploadURI,
             type: 'post',
             data: {file_to_remove: me.attr('data-file')},
             success: function () {
-                me.closest('div').remove();
-                //listFilesOnServer();
+                me.closest('div').remove();//remove item from list
             }
         });
 
     })
 
 
+    /**@
+     *
+     * @param uploadDetails
+     * @decription by uploading media, should insert data to database.
+     *              this function generate input forms into add form to post with other
+     *              form data to store in db
+     */
     function listFilesOnServer(uploadDetails) {
         var items = [];
+        var html = "";
         $.each(uploadDetails, function (index, element) {
-            items.push('<div><input class=" ' + element.file_name + '" name="uploaded_files[' + element.raw_name + '][server_path]" value="' + element.full_path + '" ><input type="hidden" name="uploaded_files[' + element.raw_name + '][size]" value="' + element.file_size + '" ><a href="#" data-file="' + element.file_name + '" class="remove-file"><i class="glyphicon glyphicon-remove"></i></a></div>');
+            html = '<div class="uploaded-file-inputs">';
+            html+='<input class=" ' + element.file_name + '" name="uploaded_files[' + element.raw_name + '][server_path]" value="' + element.full_path + '" >';
+            html+='<input type="hidden" name="uploaded_files[' + element.raw_name + '][size]" value="' + element.file_size + '" >';
+            html+='<input type="hidden" name="uploaded_files[' + element.raw_name + '][ext]" value="' + element.file_ext + '" >';
+            html+='<a href="#" data-file="' + element.file_name + '" class="remove-file"><i class="glyphicon glyphicon-remove"></i></a>';
+            html+='</div>';
+            items.push(html);
         });
         $('#files-list').append("").append(items.join(""));
     }
 
 
     function displayUplodDetail(uploadDetails) {
+        console.log(uploadDetails);
         $("#uploaded_file_detils").html("");
         $.each(uploadDetails, function (index, element) {
             var details="<div class='file_detils_wraper'><li class='uploaded_file_detils'>ذخیره شده با نام: " + element.file_name + "</li>";

@@ -47,24 +47,42 @@ class Media_model extends CI_Model
     {
         $this->db->select()
             ->from('media')
-                ->limit($limit)
-                ->offset($start);
+            ->limit($limit)
+            ->offset($start);
         $query = $this->db->get()->result_array();
-        if (count($query)> 0) {
-           foreach ($query as $item =>$value){
-               $query[$item]['terms']="s";
-           }
-        }
-        echo "<pre>";print_r($query);exit();
+        if (count($query) > 0) {
 
-        if ($query->num_rows() > 0) {
-            foreach ($query->result_array() as $row) {
-                $data[] = $row;
-
-
+            //get term of each media
+            foreach ($query as $key => $media) {
+                $result[$key] = $media;
+                $this->db->select();
+                $this->db->from('media_term');
+                $this->db->where('media_id', $media['media_id']);
+                $result[$key]["term"] = $this->db->get()->result_array();
             }
 
-            return $data;
+            //get term name of each media
+            foreach ($result as $key => $media) {
+                foreach ($media['term'] as $term_key => $term) {
+                    $this->db->select($term['term_type'] . '_name');
+                    if($term['term_type']=="shahidan"){
+                        $this->db->select($term['term_type'] . '_familly');
+                    }
+                    $this->db->from($term['term_type']);
+                    $this->db->where($term['term_type'] . '_id', $term['term_id']);
+                    $term_name = $this->db->get()->result_array();
+                    if (isset($term_name[0][$term['term_type'] . '_name'])) {
+                        $result[$key]["term"][$term_key]['term_name'] = $term_name[0][$term['term_type'] . '_name'];
+                        if($term['term_type']=="shahidan"){
+                            $result[$key]["term"][$term_key]['term_name'] .= " ".$term_name[0][$term['term_type'] . '_familly'];
+                        }
+
+                    }else{
+                        $result[$key]["term"][$term_key]['term_name']="";
+                    }
+                }
+            }
+            return $result;
         }
         return false;
     }

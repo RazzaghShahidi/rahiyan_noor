@@ -50,7 +50,7 @@
     </div>
 
 
-    <?php echo form_open('media/add_media', array('id' => 'media_form')); ?>
+    <?php echo form_open('media/add', array('id' => 'media_form')); ?>
     <div class="form-group form-inline">
         <label for="media_title">عنوان :</label>
         <?php echo form_input(array('name' => 'media_title', 'class' => 'form-control', 'id' => 'media_title', 'placeholder' => 'عنوان')); ?>
@@ -90,4 +90,4 @@
     <!--           End adding region-->
 </div>
 
-<img src="C:/xampp/htdocs/rahiyan_noor/uploads/1.jpg" alt="alt">
+

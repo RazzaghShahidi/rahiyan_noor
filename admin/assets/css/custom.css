@@ -25,15 +25,19 @@
 	direction: ltr;
 }
 
-#selected-term-list li{
+#selected-term-list li, .lib-tags ul li{
 	list-style: none;
 	display: inline-block;
 	padding: 10px;
 	border: 1px solid #ceeef1;
-	margin: 5px;
+	margin:0 5px;
 	background-color: #afd9ee;
 }
 
 select{
 	padding: 5px;
+}
+
+hr {
+	margin: 10px 0;
 }

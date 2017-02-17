@@ -12,13 +12,13 @@
         <h1 class="page-header">لیست مدیا</h1>
     </div>
     <!--           end title field     -->
-    <!--      Start list meta     -->
+    <!--      Start list media     -->
 
 
     <!--                <div class="row">-->
 
 
-    <?php foreach ($results as $meta): ?>
+    <?php foreach ($results as $media): ?>
         <div class="col-md-1"></div>
         <div class="col-md-5 no-padding lib-item" data-category="ui">
             <div class="lib-panel">
@@ -28,25 +28,25 @@
                     </div>
                     <div class="col-md-12">
                         <div class="lib-row lib-header">
-                            <?php echo $meta['meta_title']; ?>
+                            <?php echo $media['media_title']; ?>
                             <div class="lib-header-seperator"></div>
                         </div>
 
                         <div class="lib-row lib-desc">
                             <ul>
-                                <li>نام مدیا: <?php echo $meta['meta_file_name'] . $meta['meta_file_ext']; ?></li>
-                                <li>سایز مدیا: <?php echo $meta['meta_size']; ?> </li>
-                                <li>محل ذخیره: <?php echo $meta['meta_path']; ?></li>
+                                <li>نام مدیا: <?php echo $media['media_file_name'] . $media['media_file_ext']; ?></li>
+                                <li>سایز مدیا: <?php echo $media['media_size']; ?> </li>
+                                <li>محل ذخیره: <?php echo $media['media_path']; ?></li>
                             </ul>
                         </div>
                         <hr/>
                         <div class="lib-row lib-desc">
-                            <p><?php echo substr($meta['meta_detail'], 0, 100); ?>...</p>
+                            <p><?php echo substr($media['media_detail'], 0, 100); ?>...</p>
                         </div>
                         <hr/>
                         <div class="lib-row lib-tags">
                             <ul>
-                                <?php foreach ($meta['term'] as $term_value) { ?>
+                                <?php foreach ($media['term'] as $term_value) { ?>
                                     <li><?php echo $term_value['term_name']; ?></li>
                                 <?php } ?>
                             </ul>

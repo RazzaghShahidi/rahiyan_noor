@@ -95,18 +95,16 @@ class Shahidan_model extends CI_Model
             $this->db->where("shahidan.shahidan_id", $id);
         }
         $query = $this->db->get()->result_array();
-
-        //get ammaliyat of each shahida
-        foreach ($query as $key => $shahidan) {
-            $result[$key] = $shahidan;
-            $this->db->select('*');
-            $this->db->from('shahidan_ammaliyat');
-            $this->db->join('ammaliyat', 'shahidan_ammaliyat.ammaliyat_id=ammaliyat.ammaliyat_id');
-            $this->db->where('shahidan_ammaliyat.shahidan_id', $shahidan['shahidan_id']);
-            $result[$key]["ammaliyat"] = $this->db->get()->result_array();
-        }
-
         if (count($query) > 0) {
+            //get ammaliyat of each shahida
+            foreach ($query as $key => $shahidan) {
+                $result[$key] = $shahidan;
+                $this->db->select('*');
+                $this->db->from('shahidan_ammaliyat');
+                $this->db->join('ammaliyat', 'shahidan_ammaliyat.ammaliyat_id=ammaliyat.ammaliyat_id');
+                $this->db->where('shahidan_ammaliyat.shahidan_id', $shahidan['shahidan_id']);
+                $result[$key]["ammaliyat"] = $this->db->get()->result_array();
+            }
             return $result;
         }
         return false;

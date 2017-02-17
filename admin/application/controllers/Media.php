@@ -20,9 +20,9 @@ class Media extends RN_Controller
     function index()
     {
         $this->load->library('pagination');
-
-        $data["username"] = $this->username;
-        $view_data['$controller_name'] = "media";
+        $view_data["links"] = $this->pagination->create_links();
+        $view_data["username"] = $this->username;
+        $view_data['controller_name'] = "media";
 
         $config = array();
         $config['next_link'] = '&gt;';
@@ -42,32 +42,9 @@ class Media extends RN_Controller
         $this->pagination->initialize($config);
 
         $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-        $media = $this->media_model->fetch_media($config["per_page"], $page);
-
-        $data["results"] = array();
-        foreach ($media as $key => $value) {
-            $media_id = $value['media_id'];
-            if (array_key_exists($ammaliyat_id, $data["results"])) {
-                $data["results"][$ammaliyat_id]["manategh_name"] .= " ,{$value['manategh_name']}";
-            } else {
-                $data["results"][$ammaliyat_id] = array(
-                    'ammaliyat_name' => $value['ammaliyat_name'],
-                    'ammaliyat_start_date' => $value['ammaliyat_start_date'],
-                    'ammaliyat_end_date' => $value['ammaliyat_end_date'],
-                    'ammaliyat_operation_code' => $value['ammaliyat_operation_code'],
-                    'ammaliyat_Strength' => $value['ammaliyat_Strength'],
-                    'ammaliyat_commander_name' => $value['ammaliyat_commander_name'],
-                    'ammaliyat_description' => $value['ammaliyat_description'],
-                    'manategh_id' => $value['manategh_id'],
-                    'manategh_name' => $value['manategh_name'],
-                );
-            }
-
-        }
-
-        $data["links"] = $this->pagination->create_links();
-
-        $this->template->load('media/media_view', $data);
+        $view_data['results'] = $this->media_model->fetch_media($config["per_page"], $page);
+//        echo "<pre>";print_r($view_data['results']);
+        $this->template->load('media/media_view', $view_data);
     }
 
 
@@ -79,7 +56,7 @@ class Media extends RN_Controller
             $this->load->model('ammaliyat_model');
             $this->form_validation->set_rules('media_title', 'عنوان مدیا', 'trim|required|xss_clean');
             $this->form_validation->set_rules('uploaded_files[]', 'فایل های آپلود شده', 'trim|required|xss_clean');
-//            $this->form_validation->set_rules($ingredient, $ingredient, 'trim|required|xss_clean');
+            $this->form_validation->set_rules('media_terms[]', 'برچسب های مدیا', 'trim|required|xss_clean');
             $this->form_validation->set_rules('media_detail', 'توضیحات مدیا', 'xss_clean');
 
             if ($this->form_validation->run() == true) {
@@ -88,6 +65,7 @@ class Media extends RN_Controller
                 foreach ($_POST['uploaded_files'] as $upload_name => $uploaded_file) {
                     $data['media_title'] = $this->input->post('media_title');
                     $data['media_file_name'] = $upload_name;
+                    $data['media_file_ext'] = $uploaded_file['ext'];
                     $data['media_path'] = $uploaded_file['server_path'];
                     $data['media_size'] = $uploaded_file['size'];
                     $data['media_detail'] = $this->input->post('media_detail');
@@ -98,7 +76,6 @@ class Media extends RN_Controller
                     }
 
                 }
-
 
             } else {
                 //Field validation failed.
@@ -150,7 +127,7 @@ class Media extends RN_Controller
             $result = $this->shahidan_model->get_depend_shahidan($row->shahidan_id);
             if ($result->num_rows() > 0) {
                 foreach ($result->result() as $list) {
-                    $HTML .= "<option value='" . $list->shahidan_id . "'>" . $list->shahidan_name . "</option>";
+                    $HTML .= "<option value='" . $list->shahidan_id . "'>" . $list->shahidan_name ." ".$list->shahidan_familly. "</option>";
                 }
             }
         }
