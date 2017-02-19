@@ -1,14 +1,21 @@
+/**@
+ * @description
+ */
 $(function () {
 
     $(".delete_me").click(function () {
+
         var manateghId = $(this).attr("id");
         var parent = $(this).parent();
-        var item = parent.closest('tr'); item.slideUp('slow', function () {
+        var item = parent.closest('tr');
+
+        item.slideUp('slow', function () {
             $(this).remove();
         });
+
         $.ajax({
             type: "post",
-            url: window.location.origin+"/rahiyan_noor/admin/manategh/delete_manategh_id",
+            url: window.location.origin+"/rahiyan_noor/admin/manategh/delete_manategh_id",// full URL to function in controller
             cache: false,
             data: 'manategh_id=' + manateghId,
             success: function (response) {console.log(response);
@@ -20,12 +27,12 @@ $(function () {
                     }
 
                 } catch (e) {
-                    alert('Exception while request..');
+                    alert('درخواست حذف با شکست مواجه شد.');
                 }
             },
             error: function () {
-                alert('Error while request..');
+                alert('درخواست حذف با شکست مواجه شد.');
             }
         });
     })
-})
+});

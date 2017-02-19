@@ -1,31 +1,43 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-
 /**
  * Created by RAZZAGH SHAHIDI.(razagh.shahidi74@gmail.com)
  * Date: 02/09/2017
  * Time: 09:35 AM
  *Description:
  */
+
+/**@
+ * Class Shahidan
+ */
 class Shahidan extends RN_Controller
 {
 
+    /**@
+     * Shahidan constructor.
+     */
     function __construct()
     {
         parent::__construct();
+
         $this->load->model('shahidan_model');
         $this->load->library("pagination");
     }
 
-    //display list shahidan
+    //
+    /**@
+     * @description display list shahidan an its ammaliyat and manategh
+     */
     function index()
     {
-        $data['controller_name']= "shahidan";
-        $data["username"] = $this->username;
+        $view_data['controller_name']= "shahidan";
+        $view_data["username"] = $this->username;
+        $view_data["results"] =array();
 
+        //config pagination
         $config = array();
-        $config['next_link'] = '&gt;';
-        $config['prev_link'] = '&lt;';
+        $config['next_link'] = '&lt;';
+        $config['prev_link'] = '&gt;';
         $config['next_tag_open'] = '<li>';
         $config['next_tag_close'] = '</li>';
         $config['prev_tag_open'] = '<li>';
@@ -40,22 +52,30 @@ class Shahidan extends RN_Controller
         $config["uri_segment"] = 3;//@todo should fix in server
         $this->pagination->initialize($config);
 
-        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-        $data["results"] = $this->shahidan_model->fetch_shahidan($config["per_page"], $page,null);
+        $view_data["links"] = $this->pagination->create_links();
 
-        $data["links"] = $this->pagination->create_links();
-        $this->template->load('shahidan/shahidan_view', $data);
+        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        $view_data["results"] = $this->shahidan_model->fetch_shahidan($config["per_page"], $page,null);
+
+        $this->template->load('shahidan/shahidan_view', $view_data);
     }
 
-
+    /**@
+     * @description delete shahidan and it's related manategh and ammaliyat
+     */
     function delete_shahidan_id() {
         $shahidan_id =  $this->input->post('shahidan_id');
+
         $data['status'] = $this->shahidan_model->delete_shahidan_id($shahidan_id);
+
         echo json_encode($data);
     }
 
 
     //add shahidan
+    /**@
+     * @description add new shahidan and it's depend manategh and ammaliyat
+     */
     function add()
     {
         $view_data['form_type'] = "add";
@@ -69,8 +89,8 @@ class Shahidan extends RN_Controller
 
             $this->form_validation->set_rules('shahidan_name', 'نام شهید', 'trim|required|xss_clean');
             $this->form_validation->set_rules('shahidan_familly', 'نام خانوادگی شهید ', 'trim|required|xss_clean');
-            $this->form_validation->set_rules('shahidan_date_of_birth', 'تاریخ تولد', 'trim|required|xss_clean');
-            $this->form_validation->set_rules('shahidan_date_of_deth', 'تاریخ شهادت', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('shahidan_date_of_birth', 'تاریخ تولد', 'trim|required|xss_clean|callback_checkDateFormat');
+            $this->form_validation->set_rules('shahidan_date_of_deth', 'تاریخ شهادت', 'trim|required|xss_clean|callback_checkDateFormat');
             $this->form_validation->set_rules('shahidan_birth_place', 'مکان شهادت', 'trim|required|xss_clean');
             $this->form_validation->set_rules('ingredients[]', 'عملیات', 'trim|required|xss_clean');
             $this->form_validation->set_rules('shahidan_will', 'وصیت نامه', 'xss_clean');
@@ -108,7 +128,10 @@ class Shahidan extends RN_Controller
         $this->template->load('shahidan/add_shahidan_view', $view_data);
     }
 
-
+    /**@
+     * @param $id
+     * @description edite shahidan
+     */
     function edite($id)
     {
         $this->load->model('manategh_model');
@@ -116,14 +139,15 @@ class Shahidan extends RN_Controller
         $view_data['form_type']       = "edite/" . $id;
         $view_data['massage']         = "اطلاعات برای ویرایش آماده شده است: ";
         $view_data['controller_name'] = "shahidan";
+        $view_data["results"]=array();
 
         if ($this->input->post()) { //if form sent
 
             //validate add ammaliyat form data
             $this->form_validation->set_rules('shahidan_name', 'نام شهید', 'trim|required|xss_clean');
             $this->form_validation->set_rules('shahidan_familly', 'نام خانوادگی شهید ', 'trim|required|xss_clean');
-            $this->form_validation->set_rules('shahidan_date_of_birth', 'تاریخ تولد', 'trim|required|xss_clean');
-            $this->form_validation->set_rules('shahidan_date_of_deth', 'تاریخ شهادت', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('shahidan_date_of_birth', 'تاریخ تولد', 'trim|required|xss_clean|callback_checkDateFormat');
+            $this->form_validation->set_rules('shahidan_date_of_deth', 'تاریخ شهادت', 'trim|required|xss_clean|callback_checkDateFormat');
             $this->form_validation->set_rules('shahidan_birth_place', 'مکان شهادت', 'trim|required|xss_clean');
             $this->form_validation->set_rules('ingredients[]', 'عملیات', 'trim|required|xss_clean');
             $this->form_validation->set_rules('shahidan_will', 'وصیت نامه', 'xss_clean');
@@ -162,19 +186,30 @@ class Shahidan extends RN_Controller
     }
 
 
-
+    /**@
+     * @return mixed
+     * @description  Get all manategh for select manategh
+     */
     function get_all_manategh()
     {
         $this->load->model('manategh_model');
+
         return $this->manategh_model->get_all_manategh();
     }
 
+
+    /**@
+     * @description Get all ammaliyat depend on selected manategh (call by ajax)
+     */
     function get_all_depend_ammaliyat()
     {
         $loadType = $_POST['loadType'];//ammaliyat
         $loadId = $_POST['loadId'];//id
+
         $this->load->model('ammaliyat_model');
+
         $ammaliyat_id = $this->ammaliyat_model->get_ammaliyat_id($loadType, $loadId);
+
         $HTML = "";
         foreach ($ammaliyat_id->result() as $row) {
             $result = $this->ammaliyat_model->get_depend_ammaliyat($row->ammaliyat_id);
@@ -184,10 +219,15 @@ class Shahidan extends RN_Controller
                 }
             }
         }
+
         echo $HTML;
     }
 
-
+    /**@
+     * @param $date
+     * @return bool
+     * @description Validate date format (callback function)
+     */
     public function checkDateFormat($date)
     {
         if (preg_match("/^[1-9][0-9]{3}\/(0[1-9]|1[0-2])\/(0[1-9]|[1-2][0-9]|3[0-1])$/", $date)) {
@@ -196,4 +236,5 @@ class Shahidan extends RN_Controller
             return false;
         }
     }
+
 }

@@ -17,7 +17,7 @@
     <?php echo validation_errors(); ?>
     <div class="form-group">
         <label for="exampleInputFile">فایل را انتخاب کنید :</label>
-        <form action="<?php echo site_url("media/upload") ?>" id="form-upload">
+        <form action="<?php echo site_url("meta/upload") ?>" id="form-upload">
             <div class="fileinput fileinput-new input-group" data-provides="fileinput">
                 <div class="form-control" data-trigger="fileinput"><i
                             class="glyphicon glyphicon-file fileinput-exists"></i> <span
@@ -50,13 +50,13 @@
     </div>
 
 
-    <?php echo form_open('media/add', array('id' => 'media_form')); ?>
+    <?php echo form_open('meta/add', array('id' => 'meta_form')); ?>
     <div class="form-group form-inline">
-        <label for="media_title">عنوان :</label>
-        <?php echo form_input(array('name' => 'media_title', 'class' => 'form-control', 'id' => 'media_title', 'placeholder' => 'عنوان')); ?>
+        <label for="meta_title">عنوان :</label>
+        <?php echo form_input(array('name' => 'meta_title', 'class' => 'form-control', 'id' => 'meta_title', 'placeholder' => 'عنوان')); ?>
     </div>
     <div class="form-group form-inline">
-        <label for="media_title"> مدیا :</label>
+        <label for="meta_title"> فایل :</label>
         <div id="files-list"></div>
     </div>
 
@@ -84,7 +84,7 @@
 
     </div>
 
-    <?php echo form_textarea(array('name' => 'media_detail', 'class' => 'form-control', 'rows' => '6', 'placeholder' => 'توضیحات فایل')); ?>
+    <?php echo form_textarea(array('name' => 'meta_detail', 'class' => 'form-control', 'rows' => '6', 'placeholder' => 'توضیحات فایل')); ?>
     <button type="submit" class="btn btn-default">Submit</button>
     <?php echo form_close(); ?>
     <!--           End adding region-->

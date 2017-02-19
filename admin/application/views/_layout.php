@@ -65,7 +65,7 @@
                 <ul class="dropdown-menu">
 
                     <li>
-                        <a href="<?php base_url()?>login/logout"> خروج <i class="fa fa-fw fa-power-off"></i></a>
+                        <a href="<?php echo base_url()?>login/logout"> خروج <i class="fa fa-fw fa-power-off"></i></a>
                     </li>
                 </ul>
             </li>
@@ -110,8 +110,8 @@
             </li>
             <li><a href="#">فایل ها<span class="glyphicon glyphicon-chevron-right down-up" aria-hidden="true"></span></a>
                 <ul>
-                    <li><a href="<?php echo base_url() ?>term/add">افزودن فایل</a></li>
-                    <li><a href="<?php echo base_url() ?>term">لیست فایل ها </a></li>
+                    <li><a href="<?php echo base_url() ?>meta/add">افزودن فایل</a></li>
+                    <li><a href="<?php echo base_url() ?>meta">لیست فایل ها </a></li>
                 </ul>
             </li>
         </ul>

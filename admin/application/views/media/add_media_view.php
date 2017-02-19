@@ -6,15 +6,18 @@
  *Description:
  */
 ?>
+
 <div class="container-fluid">
-    <!--         Title field      -->
+
+    <!--   Title field    -->
     <div class="col-lg-12">
         <h1 class="page-header"><?php echo $massage; ?></h1>
     </div>
-    <!--           end title field     -->
-    <!--      Start adding region     -->
+    <!--   end title field     -->
 
+    <!--   Start adding region     -->
     <?php echo validation_errors(); ?>
+
     <div class="form-group">
         <label for="exampleInputFile">فایل را انتخاب کنید :</label>
         <form action="<?php echo site_url("media/upload") ?>" id="form-upload">
@@ -51,43 +54,43 @@
 
 
     <?php echo form_open('media/add', array('id' => 'media_form')); ?>
-    <div class="form-group form-inline">
-        <label for="media_title">عنوان :</label>
-        <?php echo form_input(array('name' => 'media_title', 'class' => 'form-control', 'id' => 'media_title', 'placeholder' => 'عنوان')); ?>
-    </div>
-    <div class="form-group form-inline">
-        <label for="media_title"> مدیا :</label>
-        <div id="files-list"></div>
-    </div>
+        <div class="form-group form-inline">
+            <label for="media_title">عنوان :</label>
+            <?php echo form_input(array('name' => 'media_title', 'class' => 'form-control', 'id' => 'media_title', 'placeholder' => 'عنوان')); ?>
+        </div>
+        <div class="form-group form-inline">
+            <label for="media_title"> مدیا :</label>
+            <div id="files-list"></div>
+        </div>
 
 
-    <div id="mform"></div>
-    <div class="form-group form-inline">
-        <ul id="selected-term-list">
+        <div id="mform"></div>
+        <div class="form-group form-inline">
+            <ul id="selected-term-list">
 
-        </ul>
-        <select onchange="selectState(this.options[this.selectedIndex].value, 'ammaliyat');selectIngredient(this,'manategh')">
-            <option value="-1">انتخاب منطقه</option>
-            <?php foreach ($manategh as $mantaghe): ?>
-                <option value="<?php echo $mantaghe['manategh_id'] ?>"><?php echo $mantaghe['manategh_name'] ?></option>
-            <?php endforeach; ?>
-        </select>
-        <select id="ammaliyat_dropdown"
-                onchange="selectState(this.options[this.selectedIndex].value, 'shahidan');selectIngredient(this,'ammaliyat')">
-            <option>عملیات</option>
-        </select>
-        <span id="ammaliyat_loader"></span>
-        <select id="shahidan_dropdown" onchange="selectIngredient(this,'shahidan')">
-            <option>شهدا</option>
-        </select>
-        <span id="shahidan_loader"></span>
+            </ul>
+            <select onchange="selectState(this.options[this.selectedIndex].value, 'ammaliyat');selectIngredient(this,'manategh')">
+                <option value="-1">انتخاب منطقه</option>
+                <?php foreach ($manategh as $mantaghe): ?>
+                    <option value="<?php echo $mantaghe['manategh_id'] ?>"><?php echo $mantaghe['manategh_name'] ?></option>
+                <?php endforeach; ?>
+            </select>
+            <select id="ammaliyat_dropdown"
+                    onchange="selectState(this.options[this.selectedIndex].value, 'shahidan');selectIngredient(this,'ammaliyat')">
+                <option>عملیات</option>
+            </select>
+            <span id="ammaliyat_loader"></span>
+            <select id="shahidan_dropdown" onchange="selectIngredient(this,'shahidan')">
+                <option>شهدا</option>
+            </select>
+            <span id="shahidan_loader"></span>
 
-    </div>
+        </div>
 
-    <?php echo form_textarea(array('name' => 'media_detail', 'class' => 'form-control', 'rows' => '6', 'placeholder' => 'توضیحات فایل')); ?>
-    <button type="submit" class="btn btn-default">Submit</button>
+        <?php echo form_textarea(array('name' => 'media_detail', 'class' => 'form-control', 'rows' => '6', 'placeholder' => 'توضیحات فایل')); ?>
+        <button type="submit" class="btn btn-default">Submit</button>
     <?php echo form_close(); ?>
-    <!--           End adding region-->
+    <!--   End adding region-->
 </div>
 
 

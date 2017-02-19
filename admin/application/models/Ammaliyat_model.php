@@ -6,8 +6,15 @@
  * @Time: 09:12 PM
  * @Description:
  */
+
+/**@
+ * Class Ammaliyat_model
+ */
 class Ammaliyat_model extends CI_Model
 {
+    /**@
+     * Ammaliyat_model constructor.
+     */
     function __construct()
     {
         parent::__construct();
@@ -138,6 +145,7 @@ class Ammaliyat_model extends CI_Model
             $this->db->where("ammaliyat.ammaliyat_id", $id);
         }
         $query = $this->db->get()->result_array();
+
         foreach ($query as $key => $ammaliyat) {
             $result[$key] = $ammaliyat;
             $this->db->select('*');
@@ -148,7 +156,6 @@ class Ammaliyat_model extends CI_Model
         }
 
         if (count($result) > 0) {
-
             return $result;
         }
         return false;
