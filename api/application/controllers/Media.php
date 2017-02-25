@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Created by RAZZAGH SHAHIDI.(razagh.shahidi74@gmail.com)
+ * Created by sarwin
  * Date: 02/04/2017
  * Time: 11:14 PM
  *Description:
@@ -25,8 +25,19 @@ class Media extends REST_Controller
 
     public function index_get()
     {
-        $condition = $this->get();
-        $response = $this->media_model->get($condition);
+        $conditions = $this->get();
+        $response['media'] = $this->media_model->get($conditions);
+        if ($response) {
+            $this->response($response, 200); // 200 being the HTTP response code
+        } else {
+            $this->response(array('status' => 'failed'), 404);
+        }
+    }
+
+    public function conditional_get()
+    {
+        $conditions = $this->get();
+        $response['media'] = $this->media_model->conditional_get($conditions);
         if ($response) {
             $this->response($response, 200); // 200 being the HTTP response code
         } else {

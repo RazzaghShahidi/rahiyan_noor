@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by RAZZAGH SHAHIDI.(razagh.shahidi74@gmail.com)
+ * Created by Sarwin
  * Date: 02/08/2017
  * Time: 05:42 PM
  *Description:
@@ -10,13 +10,18 @@
 <div class="container-fluid">
 
     <!--   Title field  -->
-    <div class="col-lg-12">
-        <h1 class="page-header"><?php echo $massage; ?></h1>
+    <div class="row page-header">
+        <div class="col-md-4">
+            <h1><a href="<?php echo base_url("manategh") ;?>" class="btn btn-success btn-lg btn-block" >لیست مناطق</a></h1>
+        </div>
+        <div class="col-lg-8">
+            <h1 ><?php echo $massage; ?></h1>
+        </div>
     </div>
     <!--  end title field  -->
 
     <!--  Start adding manategh  -->
-    <?php echo validation_errors(); ?>
+        <?php echo validation_errors('<div class="error">', '</div>'); ?>
 
     <?php echo form_open(base_url() . 'manategh/' . $form_type); ?>
 

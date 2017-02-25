@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Created by RAZZAGH SHAHIDI.(razagh.shahidi74@gmail.com)
+ * Created by Sarwin.
  * Date: 02/08/2017
  * Time: 09:11 PM
  *Description:
@@ -91,13 +91,13 @@ class Ammaliyat extends RN_Controller
         if ($this->input->post()) { //is form sent?
 
             //validate add ammaliyat form data
-            $this->form_validation->set_rules('ammaliyat_name', 'نام عملیات', 'trim|required|xss_clean');
-            $this->form_validation->set_rules('ammaliyat_commander_name', 'نام فرمانده', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('ammaliyat_name', 'نام عملیات', 'trim|required|xss_clean|callback_ammaliyatNameExists',array('required'=>'فیلد %s باید دارای مقدار باشد.'));
+            $this->form_validation->set_rules('ammaliyat_commander_name', 'نام فرمانده', 'trim|required|xss_clean',array('required'=>'فیلد %s باید دارای مقدار باشد.'));
             $this->form_validation->set_rules('ammaliyat_start_date', 'تاریخ شروع', 'trim|xss_clean|callback_checkDateFormat');
             $this->form_validation->set_rules('ammaliyat_end_date', 'تاریخ پایان عملیات', 'trim|xss_clean|callback_checkDateFormat');
             $this->form_validation->set_rules('ammaliyat_operation_code', 'رمز عملیات', 'trim|xss_clean');
             $this->form_validation->set_rules('ammaliyat_Strength', 'نیروهای عمل کننده', 'trim|xss_clean');
-            $this->form_validation->set_rules('ingredients[]', 'مناطق عملیات', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('ingredients[]', 'مناطق عملیات', 'trim|required|xss_clean',array('required'=>'فیلد %s باید دارای مقدار باشد.'));
             $this->form_validation->set_rules('ammaliyat_description', 'توضیحات', 'trim|xss_clean');
 
 
@@ -149,13 +149,13 @@ class Ammaliyat extends RN_Controller
         if ($this->input->post()) { //if form sent
 
             //validate add ammaliyat form data
-            $this->form_validation->set_rules('ammaliyat_name', 'نام عملیات', 'trim|required|xss_clean');
-            $this->form_validation->set_rules('ammaliyat_commander_name', 'نام فرمانده', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('ammaliyat_name', 'نام عملیات', 'trim|required|xss_clean|callback_ammaliyatNameExists',array('required'=>'فیلد %s باید دارای مقدار باشد.'));
+            $this->form_validation->set_rules('ammaliyat_commander_name', 'نام فرمانده', 'trim|required|xss_clean',array('required'=>'فیلد %s باید دارای مقدار باشد.'));
             $this->form_validation->set_rules('ammaliyat_start_date', 'تاریخ شروع', 'trim|xss_clean|callback_checkDateFormat');
             $this->form_validation->set_rules('ammaliyat_end_date', 'تاریخ پایان عملیات', 'trim|xss_clean|callback_checkDateFormat');
             $this->form_validation->set_rules('ammaliyat_operation_code', 'رمز عملیات', 'trim|xss_clean');
             $this->form_validation->set_rules('ammaliyat_Strength', 'نیروهای عمل کننده', 'trim|xss_clean');
-            $this->form_validation->set_rules('ingredients[]', 'مناطق عملیات', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('ingredients[]', 'مناطق عملیات', 'trim|required|xss_clean',array('required'=>'فیلد %s باید دارای مقدار باشد.'));
             $this->form_validation->set_rules('ammaliyat_description', 'توضیحات', 'trim|xss_clean');
 
             //Check if form data valid
@@ -200,8 +200,19 @@ class Ammaliyat extends RN_Controller
         if (preg_match("/^[1-9][0-9]{3}\/(0[1-9]|1[0-2])\/(0[1-9]|[1-2][0-9]|3[0-1])$/", $date)) {
             return true;
         } else {
+            $this->form_validation->set_message('checkDateFormat', 'فرمت  %s وارد شده صحیح نیست. فرمت باید به صورت yyyy/mm/dd باشد.');
             return false;
         }
+    }
+
+    /**
+     * @param $ammaliyat_name
+     * @return bool
+     * @description check if ammaliyat name exist in database before
+     */
+    public function ammaliyatNameExists($ammaliyat_name){
+        $this->form_validation->set_message('ammaliyatNameExists', 'نام عملیات وارد شده، قبلا وجود دارد');
+       return $this->ammaliyat_model->ammaliyat_name_exists($ammaliyat_name);
     }
 
 }

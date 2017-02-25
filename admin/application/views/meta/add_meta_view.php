@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by RAZZAGH SHAHIDI.(razagh.shahidi74@gmail.com)
+ * Created by Sarwin
  * Date: 02/10/2017
  * Time: 08:54 PM
  *Description:
@@ -8,8 +8,13 @@
 ?>
 <div class="container-fluid">
     <!--         Title field      -->
-    <div class="col-lg-12">
-        <h1 class="page-header"><?php echo $massage; ?></h1>
+    <div class="row page-header">
+        <div class="col-md-4">
+            <h1><a href="<?php echo base_url("meta") ;?>" class="btn btn-success btn-lg btn-block" >لیست فایل ها</a></h1>
+        </div>
+        <div class="col-lg-8">
+            <h1 ><?php echo $massage; ?></h1>
+        </div>
     </div>
     <!--           end title field     -->
     <!--      Start adding region     -->
@@ -23,16 +28,16 @@
                             class="glyphicon glyphicon-file fileinput-exists"></i> <span
                             class="fileinput-filename"></span></div>
                 <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new"><i
-                                class="glyphicon glyphicon-paperclip"></i> Select file</span><span
+                                class="glyphicon glyphicon-paperclip"></i> انتخاب فایل</span><span
                             class="fileinput-exists"><i
-                                class="glyphicon glyphicon-repeat"></i> Change</span><input type="file"
+                                class="glyphicon glyphicon-repeat"></i> تغییر</span><input type="file"
                                                                                             name="file[]"
                                                                                             multiple
                                                                                             id="file"></span>
                 <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput"><i
-                            class="glyphicon glyphicon-remove"></i> Remove</a>
+                            class="glyphicon glyphicon-remove"></i> حذف</a>
                 <a href="#" id="upload-btn" class="input-group-addon btn btn-success fileinput-exists"><i
-                            class="glyphicon glyphicon-open"></i> Upload</a>
+                            class="glyphicon glyphicon-open"></i> آپلود</a>
             </div>
         </form>
         <ul id="uploaded_file_detils"></ul>

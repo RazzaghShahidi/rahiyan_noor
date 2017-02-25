@@ -1,8 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Created by RAZZAGH SHAHIDI.(razagh.shahidi74@gmail.com)
- * Date: 02/10/2017
+ * Created by Sarwin
  * Time: 08:00 PM
  *Description:
  */
@@ -79,7 +78,7 @@ class Media extends RN_Controller
             //Validate form data
             $this->form_validation->set_rules('media_title', 'عنوان مدیا', 'trim|required|xss_clean');
             $this->form_validation->set_rules('uploaded_files[]', 'فایل های آپلود شده', 'trim|required|xss_clean');
-            $this->form_validation->set_rules('media_terms[]', 'برچسب های مدیا', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('media_terms[]', 'برچسب های مدیا', 'trim|xss_clean');
             $this->form_validation->set_rules('media_detail', 'توضیحات مدیا', 'xss_clean');
 
             //Check is form data valid?
@@ -182,7 +181,7 @@ class Media extends RN_Controller
 
             //config upload
             $config['upload_path'] = "./../uploads/media";
-            $config['allowed_types'] = 'gif|jpg|png|mp4|ogv';
+            $config['allowed_types'] = 'gif|jpg|png|mp4|ogv|mp3|mkv';
             $this->load->library('upload');
 
             $files = $_FILES;

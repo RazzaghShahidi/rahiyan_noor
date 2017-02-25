@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Created by RAZZAGH SHAHIDI.(razagh.shahidi74@gmail.com)
+ * Created by sarwin
  * Date: 02/03/2017
  * Time: 01:23 PM
  * get and insert into ammaliyat table
@@ -35,14 +35,21 @@ class shahidan_model extends CI_Model
         $this->db->select('*');
         $this->db->from("shahidan_ammaliyat");
         $this->db->where('shahidan_ammaliyat.ammaliyat_id', $ammaliyat_id);
-        $this->db->join('shahidan', 'shahidan.shahidan_id = shahidan.shahidan_id');
-        foreach ($conditions as $colemn => $value) {
-            if (in_array('shahidan_' . $colemn, $colemn_name)) {
-                $this->db->where('shahidan_' . $colemn, $value);
+        $this->db->join('shahidan', 'shahidan_ammaliyat.shahidan_id = shahidan.shahidan_id');
+//        foreach ($conditions as $colemn => $value) {
+//            if (in_array('shahidan_' . $colemn, $colemn_name)) {
+//                $this->db->where('shahidan_' . $colemn, $value);
+//            }
+//        }
+        $shahidan= array();
+        if ($results = $this->db->get()->result_array()) {
+            foreach ($results as $result){
+                unset($result["id"]);
+                unset($result["ammaliyat_id"]);
+                $shahidan[]=$result;
             }
-        }
-        if ($result = $this->db->get()->result()) {
-            return $result;
+
+            return $shahidan;
         } else {
             return false;
         }

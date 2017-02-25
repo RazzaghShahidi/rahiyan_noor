@@ -1,5 +1,5 @@
 /**
- * Created by Shahidi on 02/12/2017.
+ * Created by sarwin on 02/12/2017.
  */
 
 /**
@@ -106,4 +106,81 @@ $(function () {
             }
         });
     })
-})
+});
+
+
+/**
+ * @description upload shahid pic with ajax
+ */
+
+jQuery(function () {
+    var inputFile = $('input#file');
+    var uploadURI = $('#form-upload').attr('action');
+
+    $('#upload-btn').on('click', function (event) {
+        var filesToUpload = inputFile[0].files;
+        // make sure there is file(s) to upload
+        if (filesToUpload.length > 0) {
+            // provide the form data
+            // that would be sent to sever through ajax
+            var formData = new FormData();
+
+            for (var i = 0; i < filesToUpload.length; i++) {
+                var file = filesToUpload[i];
+                formData.append("file[]", file, file.name);
+            }
+
+            // now upload the file using $.ajax
+            $.ajax({
+                url: uploadURI,
+                type: 'post',
+                data: formData,
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                success: function (uploadDetails) {
+                    var img_src = $("#shahid-pic").attr('src');
+                    $("#shahid-pic").attr('src',img_src + uploadDetails.file_name);
+                    $("#shahid-pic").show();
+                    listFilesOnServer(uploadDetails);
+                },
+
+            });
+        }
+    });
+    //remove the meta from list and database
+    $('body').on('click', '.remove-file', function () {
+        var me = $(this);
+
+        //ajax to delete meta from database
+        $.ajax({
+            url: uploadURI,
+            type: 'post',
+            data: {file_to_remove: me.attr('data-file')},
+            success: function () {
+                me.closest('div').remove();//remove item from list
+            }
+        });
+
+    })
+});
+
+
+/**@
+ *
+ * @param uploadDetails
+ * @decription by uploading meta, should insert data to database.
+ *              this function generate input forms into add form to post with other
+ *              form data to store in db
+ */
+function listFilesOnServer(uploadDetails) {
+
+    var html = "";
+        html = '<div class="uploaded-pic">';
+        html+='<input class=" ' + uploadDetails.file_name + '" name="shahid-picrure" value="' + uploadDetails.file_name + '" >';
+        html+='<a href="#" data-file="' + uploadDetails.file_name + '" class="remove-file"><i class="glyphicon glyphicon-remove"></i></a>';
+        html+='</div>';
+    $('#files-list').append("").append(html);
+}
+
+

@@ -190,39 +190,4 @@ function humanize(size){
    document.write( s + ' ' + units[ord]);
 }
 
-
-/**
- *@decription ajax delete meta with ajax
- */
-$(function () {
-
-    $(".delete_me").click(function () {
-        var metaId = $(this).attr("id");
-        var parent = $(this).parent();
-        var item = parent.closest('.lib-item');
-        item.slideUp('slow', function () {
-            $(this).remove();
-        });
-        $.ajax({
-            type: "post",
-            url: window.location.origin + "/rahiyan_noor/admin/meta/delete_meta_id",
-            cache: false,
-            data: 'meta_id=' + metaId,
-            success: function (response) {
-                try {
-                    if (response == 'true') {
-                        item.slideUp('slow', function () {
-                            $(this).remove();
-                        });
-                    }
-
-                } catch (e) {
-                    alert('حذف مدیا انجام نشد..');
-                }
-            },
-            error: function () {
-                alert('عملیات حذف با شکست مواجه شد.');
-            }
-        });
-    })
-})
+re

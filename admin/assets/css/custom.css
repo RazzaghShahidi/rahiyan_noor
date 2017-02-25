@@ -1,43 +1,112 @@
+/**
+login page
+ */
+/* Credit to bootsnipp.com for the css for the color graph */
+.colorgraph {
+    height: 5px;
+    border-top: 0;
+    background: #c4e17f;
+    border-radius: 5px;
+    background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+    background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+    background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+    background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+}
+
+
+
+
+
+
+
 #form-container {
-	padding: 20px 0;
+    padding: 20px 0;
 }
 
-#form-container h1{
-	font-size: 200%;
-	text-align: center;	
-	margin-bottom: 50px;
+#form-container h1 {
+    font-size: 200%;
+    text-align: center;
+    margin-bottom: 50px;
 }
 
-.file_detils_wraper{
-	border: 1px solid #bce8f1;
-	margin: 5px;
-	background-color:#afd9ee ;
-	width: 500px;
-}
-.file_detils_wraper li{
-	list-style: none;
-	padding: 3px;
-	margin: 5px;
+.file_detils_wraper {
+    border: 1px solid #bce8f1;
+    margin: 5px;
+    background-color: #afd9ee;
+    width: 500px;
 }
 
-#files-list div	input{
-	width:520px;
-	direction: ltr;
+.file_detils_wraper li {
+    list-style: none;
+    padding: 3px;
+    margin: 5px;
 }
 
-#selected-term-list li, .lib-tags ul li{
-	list-style: none;
-	display: inline-block;
-	padding: 10px;
-	border: 1px solid #ceeef1;
-	margin:0 5px;
-	background-color: #afd9ee;
+#files-list div input {
+    width: 520px;
+    direction: ltr;
 }
 
-select{
-	padding: 5px;
+#selected-term-list li, .lib-tags ul li {
+    list-style: none;
+    display: inline-block;
+    padding: 10px;
+    border: 1px solid #ceeef1;
+    margin: 0 5px;
+    background-color: #afd9ee;
+}
+
+select {
+    padding: 5px;
 }
 
 hr {
-	margin: 10px 0;
+    margin: 10px 0;
 }
+
+.error {
+    border: 1px solid;
+    margin: 10px 0px;
+    padding: 15px 10px 15px 50px;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+}
+
+.error {
+    color: #D8000C;
+    background-color: #FFBABA;
+}
+
+.btn-file {
+    background: #27a9e0;
+    border: solid 1px #27a9e0;
+    border-radius: 3px;
+    color: rgba(236, 242, 251, 1);
+    font-size: 16px;
+    font-weight: bolder;
+    margin-bottom: 20px;
+    outline: none !important;
+    padding: 10px 20px;
+    position: relative;
+    overflow: hidden;
+    height: 43px;
+    margin-top: 0;
+    width: 200px;
+
+}
+
+.btn-file input[type=file] {
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    width: 200px;
+    height: 42px;
+}
+

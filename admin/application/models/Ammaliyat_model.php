@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @Created by RAZZAGH SHAHIDI.(razagh.shahidi74@gmail.com)
+ * @Created by Sarwin
  * @Date: 02/08/2017
  * @Time: 09:12 PM
  * @Description:
@@ -199,4 +199,18 @@ class Ammaliyat_model extends CI_Model
         }
     }
 
+    /**
+     * @param $ammaliyat_name
+     * @return bool
+     */
+    function ammaliyat_name_exists($ammaliyat_name){
+        $this->db->where('ammaliyat_name',$ammaliyat_name);
+        $query = $this->db->get('ammaliyat');
+        if ($query->num_rows() > 0){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
 }

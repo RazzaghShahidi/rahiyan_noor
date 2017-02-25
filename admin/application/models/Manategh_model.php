@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Created by RAZZAGH SHAHIDI.(razagh.shahidi74@gmail.com)
+ * Created by Sarwin
  * Date: 02/03/2017
  * Time: 01:23 PM
  *Description: model for manategh. get and insert into manategh table
@@ -120,7 +120,20 @@ class Manategh_model extends CI_Model
         } else {
             return false;
         }
+    }
 
-
+    /**
+     * @param $manategh_name
+     * @return bool
+     */
+    function manategh_name_exists($manategh_name){
+        $this->db->where('manategh_name',$manategh_name);
+        $query = $this->db->get('manategh');
+        if ($query->num_rows() > 0){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 }

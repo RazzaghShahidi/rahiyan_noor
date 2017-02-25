@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by RAZZAGH SHAHIDI.(razagh.shahidi74@gmail.com)
+ * Created by Sarwin
  * Date: 02/12/2017
  * Time: 12:17 AM
  *Description:
@@ -8,8 +8,13 @@
 ?>
 <div class="container-fluid">
     <!--         Title field      -->
-    <div class="col-lg-12">
-        <h1 class="page-header">لیست فایل</h1>
+    <div class="row page-header">
+        <div class="col-md-4">
+            <h1><a href="<?php echo base_url("meta/add") ;?>" class="btn btn-success btn-lg btn-block" >افزودن فایل</a></h1>
+        </div>
+        <div class="col-lg-8">
+            <h1>لیست فایل</h1>
+        </div>
     </div>
     <!--           end title field     -->
     <!--      Start list meta     -->

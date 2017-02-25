@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Created by RAZZAGH SHAHIDI.(razagh.shahidi74@gmail.com)
+ * Created by
  * Date: 02/03/2017
  * Time: 01:23 PM
  * get and insert into ammaliyat table
@@ -44,8 +44,16 @@ class Ammaliyat_model extends CI_Model
                 $this->db->where('ammaliyat_' . $colemn, $value);
             }
         }
-        if ($result = $this->db->get()->result()) {
-            return $result;
+
+        //unset unused column (id & manategh_id)
+        $ammaliyats=array();
+        if ($results = $this->db->get()->result_array()) {
+            foreach ($results as $result){
+                unset($result["id"]);
+                unset($result["manategh_id"]);
+                $ammaliyats[]=$result;
+            }
+            return $ammaliyats;
         } else {
             return false;
         }

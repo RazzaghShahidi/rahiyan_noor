@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Created by RAZZAGH SHAHIDI.(razagh.shahidi74@gmail.com)
+ * Created by sarwin
  * Date: 02/04/2017
  * Time: 11:14 PM
  *Description:
@@ -26,7 +26,8 @@ class Manategh extends REST_Controller
     public function index_get()
     {
         $condition = $this->get();
-        $response = $this->manategh_model->get($condition);
+        $response=array();
+        $response["manategh"] = $this->manategh_model->get($condition);
         $this->response($response);
     }
 

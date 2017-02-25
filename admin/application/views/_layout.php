@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by RAZZAGH SHAHIDI.(razagh.shahidi74@gmail.com)
+ * Created by Sarwin
  * Date: 02/05/2017
  * Time: 12:56 AM
  *Description:the master page
@@ -61,11 +61,11 @@
         <ul class="nav top-nav">
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> <b
-                            class="caret"> </b> <?php echo $username; ?><i class="fa fa-user"></i> </a>
+                            class="caret"> </b> <?php echo $username; ?> <i class="fa fa-user"></i> </a>
                 <ul class="dropdown-menu">
 
                     <li>
-                        <a href="<?php echo base_url()?>login/logout"> خروج <i class="fa fa-fw fa-power-off"></i></a>
+                        <a href="<?php echo base_url('/auth/logout/'); ?>"> خروج <i class="fa fa-fw fa-power-off"></i></a>
                     </li>
                 </ul>
             </li>

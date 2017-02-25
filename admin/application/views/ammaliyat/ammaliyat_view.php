@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by RAZZAGH SHAHIDI.(razagh.shahidi74@gmail.com)
+ * Created by Sarwin
  * Date: 02/08/2017
  * Time: 09:14 PM
  *Description:
@@ -10,8 +10,13 @@
 <div class="container-fluid">
 
     <!--   Title field   -->
-    <div class="col-lg-12">
-        <h1 class="page-header">لیست عملیات ها</h1>
+    <div class="row page-header">
+        <div class="col-md-4">
+            <h1><a href="<?php echo base_url("ammaliyat/add") ;?>" class="btn btn-success btn-lg btn-block" >افزودن عملیات</a></h1>
+        </div>
+    <div class="col-lg-8">
+        <h1>لیست عملیات ها</h1>
+    </div>
     </div>
     <!--    end title field  -->
 

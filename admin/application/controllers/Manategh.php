@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Created by RAZZAGH SHAHIDI.(razagh.shahidi74@gmail.com)
+ * Created by Sarwin
  * Date: 02/04/2017
  * Time: 11:14 PM
  *Description:
@@ -86,7 +86,7 @@ class Manategh extends RN_Controller
         if ($_POST) {
 
             $this->load->library('form_validation');
-            $this->form_validation->set_rules('name'       , 'نام منطقه', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('name'       , 'نام منطقه', 'trim|required|xss_clean|callback_manateghNameExists',array('required'=>'فیلد %s باید دارای مقدار باشد.'));
             $this->form_validation->set_rules('description', 'توضیحات'  , 'trim|required|xss_clean');
 
             //if form data are valid
@@ -127,8 +127,8 @@ class Manategh extends RN_Controller
         if ($_POST) {
             $this->load->library('form_validation');
 
-            $this->form_validation->set_rules('name'       , 'نام منطقه', 'trim|required|xss_clean');
-            $this->form_validation->set_rules('description', 'توضیحات'  , 'trim|required|xss_clean');
+            $this->form_validation->set_rules('name'       , 'نام منطقه', 'required|xss_clean');
+            $this->form_validation->set_rules('description', 'توضیحات'  , 'required|xss_clean');
 
             if ($this->form_validation->run() == true) {
 
@@ -152,4 +152,15 @@ class Manategh extends RN_Controller
 
         $this->template->load('manategh/add_manategh_view', $view_data);
     }
+
+    /**
+     * @param $manategh_name
+     * @return bool
+     * @description check if manategh name exist in database before
+     */
+    public function manateghNameExists($manategh_name){
+        $this->form_validation->set_message('manateghNameExists', 'نام منطقه وارد شده، قبلا وجود دارد');
+        return $this->manategh_model->manategh_name_exists($manategh_name);
+    }
+
 }

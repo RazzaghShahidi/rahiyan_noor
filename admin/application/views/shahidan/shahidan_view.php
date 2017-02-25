@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by RAZZAGH SHAHIDI.(razagh.shahidi74@gmail.com)
+ * Created by Sarwin
  * Date: 02/09/2017
  * Time: 09:36 AM
  *Description:
@@ -9,8 +9,13 @@
 <div class="container-fluid">
 
     <!--   Title field  -->
-    <div class="col-lg-12">
-        <h1 class="page-header">List of Shohada</h1>
+    <div class="row page-header">
+        <div class="col-md-4">
+            <h1><a href="<?php echo base_url("shahidan/add") ;?>" class="btn btn-success btn-lg btn-block" >افزودن شهید</a></h1>
+        </div>
+        <div class="col-lg-8">
+            <h1>لیست شهدای ثبت شده</h1>
+        </div>
     </div>
     <!-- end title field   -->
 
@@ -49,7 +54,11 @@
                                 </td>
                                 <td><?php echo  substr($shahid["shahidan_biography"],0 ,100); ?>...</td>
                                 <td><?php echo  substr($shahid["shahidan_will"],0,100); ?>...</td>
-                                <td><img src="<?php echo $shahid["shahidan_picture"]; ?>" alt="تصویر شهید"></td>
+                                <td>
+                                    <?php $picurl =$shahid['shahidan_picture']?$shahid['shahidan_picture']:'default.jpg'?>
+                                    <img src="<?php  echo base_url('../uploads/shahidan_pic/').$picurl; ?>"
+                                         alt="تصویر شهید" class="img-rounded" width="120" height="180">
+                                </td>
                                 <td>
                                     <p data-placement="top" data-toggle="tooltip" title="Edit">
                                         <a href="<?php echo base_url() ?>shahidan/edite/<?php echo $shahid["shahidan_id"]; ?>"

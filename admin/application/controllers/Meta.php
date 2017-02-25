@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Created by RAZZAGH SHAHIDI.(razagh.shahidi74@gmail.com)
+ * Created by Sarwin
  * Date: 02/10/2017
  * Time: 08:00 PM
  *Description:
@@ -58,7 +58,7 @@ class Meta extends RN_Controller
             $this->load->model('ammaliyat_model');
             $this->form_validation->set_rules('meta_title', 'عنوان مدیا', 'trim|required|xss_clean');
             $this->form_validation->set_rules('uploaded_files[]', 'فایل های آپلود شده', 'trim|required|xss_clean');
-            $this->form_validation->set_rules('meta_terms[]', 'برچسب های مدیا', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('meta_terms[]', 'برچسب های مدیا', 'trim|xss_clean');
             $this->form_validation->set_rules('meta_detail', 'توضیحات مدیا', 'xss_clean');
 
             if ($this->form_validation->run() == true) {
@@ -143,7 +143,7 @@ class Meta extends RN_Controller
     {
         if (!empty($_FILES)) {
             $config['upload_path'] = "./../uploads/files";
-            $config['allowed_types'] = 'gif|jpg|png|mp4|ogv';
+            $config['allowed_types'] = 'zip|doc|docx|pptp|rar|txt|pdf|exe';
 
             $this->load->library('upload');
 

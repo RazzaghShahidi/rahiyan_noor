@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Created by RAZZAGH SHAHIDI.(razagh.shahidi74@gmail.com)
+ * Created by Sarwin
  * Date: 02/07/2017
  * Time: 11:43 PM
  *Description: the base controller that check authentication and set user loged in info
@@ -22,24 +22,10 @@ class RN_Controller extends CI_Controller
     {
         parent::__construct();
 
-
-        // check is usser loged in
-        $is_logedin     = $this->session->userdata('is_loged_in');
-        $logedin_data   = $this->session->userdata('loged_in_user');
-
-        if (!empty($is_logedin) && $is_logedin == true) {
-
-            if (!isset($logedin_data['username'])) {
-                //If username not set, redirect to login page
-                redirect('login', 'refresh');
-            }
-
+        if (!$this->tank_auth->is_logged_in()) {
+            redirect('/auth/login/');
         } else {
-            //If no loged in, redirect to login page
-            redirect('login', 'refresh');
+            $this->username = $this->tank_auth->get_username();
         }
-
-        //set username from session
-        $this->username = $logedin_data["username"];
     }
 }

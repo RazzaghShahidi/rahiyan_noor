@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Created by RAZZAGH SHAHIDI.(razagh.shahidi74@gmail.com)
+ * Created by Sarwin
  * Date: 02/06/2017
  * Time: 12:43 AM
  *Description: get user detail for auth

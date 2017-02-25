@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Created by RAZZAGH SHAHIDI.(razagh.shahidi74@gmail.com)
+ * Created by Sarwin
  * Date: 02/09/2017
  * Time: 09:35 AM
  *Description:
@@ -30,9 +30,9 @@ class Shahidan extends RN_Controller
      */
     function index()
     {
-        $view_data['controller_name']= "shahidan";
+        $view_data['controller_name'] = "shahidan";
         $view_data["username"] = $this->username;
-        $view_data["results"] =array();
+        $view_data["results"] = array();
 
         //config pagination
         $config = array();
@@ -55,7 +55,7 @@ class Shahidan extends RN_Controller
         $view_data["links"] = $this->pagination->create_links();
 
         $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-        $view_data["results"] = $this->shahidan_model->fetch_shahidan($config["per_page"], $page,null);
+        $view_data["results"] = $this->shahidan_model->fetch_shahidan($config["per_page"], $page, null);
 
         $this->template->load('shahidan/shahidan_view', $view_data);
     }
@@ -63,8 +63,9 @@ class Shahidan extends RN_Controller
     /**@
      * @description delete shahidan and it's related manategh and ammaliyat
      */
-    function delete_shahidan_id() {
-        $shahidan_id =  $this->input->post('shahidan_id');
+    function delete_shahidan_id()
+    {
+        $shahidan_id = $this->input->post('shahidan_id');
 
         $data['status'] = $this->shahidan_model->delete_shahidan_id($shahidan_id);
 
@@ -83,6 +84,7 @@ class Shahidan extends RN_Controller
         $view_data['controller_name'] = "shahidan";
         $view_data["username"] = $this->username;
 
+
         if ($_POST) {
 
             $this->load->model('ammaliyat_model');
@@ -99,15 +101,15 @@ class Shahidan extends RN_Controller
 
             if ($this->form_validation->run() == true) {
 
-                $data['shahidan_name']          = $this->input->post('shahidan_name');
-                $data['shahidan_familly']       = $this->input->post('shahidan_familly');
+                $data['shahidan_name'] = $this->input->post('shahidan_name');
+                $data['shahidan_familly'] = $this->input->post('shahidan_familly');
                 $data['shahidan_date_of_birth'] = $this->input->post('shahidan_date_of_birth');
-                $data['shahidan_date_of_deth']  = $this->input->post('shahidan_date_of_deth');
-                $data['shahidan_birth_place']   = $this->input->post('shahidan_birth_place');
-                $data['shahidan_will']          = $this->input->post('shahidan_will');
-                $data['shahidan_biography']     = $this->input->post('shahidan_biography');
+                $data['shahidan_date_of_deth'] = $this->input->post('shahidan_date_of_deth');
+                $data['shahidan_birth_place'] = $this->input->post('shahidan_birth_place');
+                $data['shahidan_will'] = $this->input->post('shahidan_will');
+                $data['shahidan_biography'] = $this->input->post('shahidan_biography');
                 foreach ($_POST['ingredients'] as $ingredient) {
-                    $ammaliyat[$ingredient]     = $ingredient;
+                    $ammaliyat[$ingredient] = $ingredient;
                 }
 
                 $shahidan_id = $this->shahidan_model->insert($data, $ammaliyat);
@@ -135,11 +137,11 @@ class Shahidan extends RN_Controller
     function edite($id)
     {
         $this->load->model('manategh_model');
-        $view_data["username"]        = $this->username;
-        $view_data['form_type']       = "edite/" . $id;
-        $view_data['massage']         = "اطلاعات برای ویرایش آماده شده است: ";
+        $view_data["username"] = $this->username;
+        $view_data['form_type'] = "edite/" . $id;
+        $view_data['massage'] = "اطلاعات برای ویرایش آماده شده است: ";
         $view_data['controller_name'] = "shahidan";
-        $view_data["results"]=array();
+        $view_data["results"] = array();
 
         if ($this->input->post()) { //if form sent
 
@@ -158,17 +160,17 @@ class Shahidan extends RN_Controller
 
                 //geting form data and store them in data array for insert to data base
 
-                $data['shahidan_name']          = $this->input->post('shahidan_name');
-                $data['shahidan_familly']       = $this->input->post('shahidan_familly');
+                $data['shahidan_name'] = $this->input->post('shahidan_name');
+                $data['shahidan_familly'] = $this->input->post('shahidan_familly');
                 $data['shahidan_date_of_birth'] = $this->input->post('shahidan_date_of_birth');
-                $data['shahidan_date_of_deth']  = $this->input->post('shahidan_date_of_deth');
-                $data['shahidan_birth_place']   = $this->input->post('shahidan_birth_place');
-                $data['shahidan_will']          = $this->input->post('shahidan_will');
-                $data['shahidan_biography']     = $this->input->post('shahidan_biography');
-                $ammaliyat=$_POST['ingredients'];
+                $data['shahidan_date_of_deth'] = $this->input->post('shahidan_date_of_deth');
+                $data['shahidan_birth_place'] = $this->input->post('shahidan_birth_place');
+                $data['shahidan_will'] = $this->input->post('shahidan_will');
+                $data['shahidan_biography'] = $this->input->post('shahidan_biography');
+                $ammaliyat = $_POST['ingredients'];
 
                 //insert data array into database (insert ammaliyat into database)
-                $shahidan_id = $this->shahidan_model->update($id,$data,$ammaliyat);
+                $shahidan_id = $this->shahidan_model->update($id, $data, $ammaliyat);
 
                 //if insert was sucsess then set sucsess massage
                 if ($shahidan_id) {
@@ -179,7 +181,7 @@ class Shahidan extends RN_Controller
                 }
             }
         }
-        $view_data["results"]=$this->shahidan_model->fetch_shahidan(1, 0,$id)[0];
+        $view_data["results"] = $this->shahidan_model->fetch_shahidan(1, 0, $id)[0];
         $view_data["manategh"] = $this->manategh_model->get_all_manategh();//get list of manategh to display in select manategh
 
         $this->template->load('shahidan/add_shahidan_view', $view_data);
@@ -237,4 +239,50 @@ class Shahidan extends RN_Controller
         }
     }
 
+    /**
+     *
+     */
+    function upload_pic()
+    {
+        if (!empty($_FILES)) {
+            $config['upload_path'] = "./../uploads/shahidan_pic/";
+            $config['allowed_types'] = 'jpg|png';
+
+            $this->load->library('upload');
+
+            $files = $_FILES;
+            $number_of_files = count($_FILES['file']['name']);
+            $errors = 0;
+
+            // codeigniter upload just support one file
+            // to upload. so we need a litte trick
+            for ($i = 0; $i < $number_of_files; $i++) {
+                $_FILES['file']['name'] = $files['file']['name'][$i];
+                $_FILES['file']['type'] = $files['file']['type'][$i];
+                $_FILES['file']['tmp_name'] = $files['file']['tmp_name'][$i];
+                $_FILES['file']['error'] = $files['file']['error'][$i];
+                $_FILES['file']['size'] = $files['file']['size'][$i];
+
+                // we have to initialize before upload
+                $this->upload->initialize($config);
+
+                if (!$this->upload->do_upload("file")) {
+                    $errors++;
+                }
+                $file_details = $this->upload->data();
+
+            }
+
+            if ($errors > 0) {
+                $error = array('error' => $this->upload->display_errors());
+                print json_encode($error);
+            } else {
+                print json_encode($file_details);
+            }
+
+        } elseif ($this->input->post('file_to_remove')) {
+            $file_to_remove = $this->input->post('file_to_remove');
+            unlink("./../uploads/shahidan_pic" . $file_to_remove);
+        }
+    }
 }

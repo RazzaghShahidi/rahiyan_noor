@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by RAZZAGH SHAHIDI.(razagh.shahidi74@gmail.com)
+ * Created by Sarwin
  * Date: 02/05/2017
  * Time: 01:08 AM
  *Description:
@@ -9,8 +9,13 @@
 
 <div class="container-fluid">
     <!--   Title field  -->
-    <div class="col-lg-12">
-        <h1 class="page-header">لیست مناطق</h1>
+    <div class="row page-header">
+        <div class="col-md-4">
+            <h1><a href="<?php echo base_url("manategh/add") ;?>" class="btn btn-success btn-lg btn-block" >افزودن منطقه</a></h1>
+        </div>
+        <div class="col-md-8">
+            <h1 >لیست مناطق</h1>
+        </div>
     </div>
     <!--  end title field   -->
 
